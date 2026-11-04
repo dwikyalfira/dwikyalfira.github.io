@@ -43,7 +43,7 @@ const photos = limit ? all.slice(0, limit) : all;
     <p class="cap-title"></p>
     <p class="info"><span class="size"></span><a class="src" target="_blank" rel="noopener noreferrer">View on Pexels ↗</a></p>
   </div>
-  <p class="hint">Click or tap the photo to magnify</p>
+  <p class="hint">Click or tap the photo to magnify<span class="swipe-hint"> · swipe to browse</span></p>
   <button type="button" class="nav prev" aria-label="Previous photo">←</button>
   <button type="button" class="nav next" aria-label="Next photo">→</button>
   <button type="button" class="close" aria-label="Close">✕</button>
@@ -94,7 +94,11 @@ const photos = limit ? all.slice(0, limit) : all;
         px = e.clientX; py = e.clientY; placeLens();
       } else lens.classList.remove('on');
     };
-    img.addEventListener('click', (e) => setMagnify(!magnifying, e));
+    let swiped = false;
+    img.addEventListener('click', (e) => {
+      if (swiped) { swiped = false; return; } // a swipe ends with a click on some devices
+      setMagnify(!magnifying, e);
+    });
     dlg.addEventListener('pointermove', (e) => {
       if (!magnifying) return;
       px = e.clientX; py = e.clientY;
@@ -121,7 +125,33 @@ const photos = limit ? all.slice(0, limit) : all;
     // swallow wheel/touch scrolling inside the viewer so it never reaches the page
     dlg.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
     dlg.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+    // swipe left/right on touch screens to change photo (disabled while the magnifier is on)
+    const slide = (dir: 1 | -1) => {
+      setMagnify(false);
+      show(cur + dir);
+      img.classList.remove('from-left', 'from-right');
+      void img.offsetWidth; // restart the animation
+      img.classList.add(dir === 1 ? 'from-right' : 'from-left');
+    };
+    let sx = 0, sy = 0, st = 0, tracking = false;
+    dlg.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' || magnifying || (e.target as Element).closest('button, a')) return;
+      tracking = true; sx = e.clientX; sy = e.clientY; st = performance.now();
+    });
+    dlg.addEventListener('pointerup', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      const fast = performance.now() - st < 600;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && fast) {
+        swiped = true;
+        setTimeout(() => (swiped = false), 400);
+        slide(dx < 0 ? 1 : -1);
+      }
+    });
+    dlg.addEventListener('pointercancel', () => (tracking = false));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg && !swiped) dlg.close(); });
     dlg.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') { setMagnify(false); show(cur - 1); }
       if (e.key === 'ArrowRight') { setMagnify(false); show(cur + 1); }
@@ -139,6 +169,7 @@ const photos = limit ? all.slice(0, limit) : all;
 
   .lightbox {
     overscroll-behavior: contain;
+    touch-action: none; /* we handle swipes ourselves */
     max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; padding: 0;
     border: 0; background: rgba(6, 10, 22, 0.94); color: #fff;
   }
@@ -146,6 +177,10 @@ const photos = limit ? all.slice(0, limit) : all;
   .lightbox::backdrop { background: transparent; }
   .lightbox img { max-width: min(92vw, 100%); max-height: calc(100vh - 200px); object-fit: contain; border-radius: 6px; cursor: zoom-in; }
   .lightbox.magnifying img { cursor: zoom-out; touch-action: none; }
+  .lightbox img.from-right { animation: from-right 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .lightbox img.from-left { animation: from-left 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  @keyframes from-right { from { opacity: 0; transform: translateX(40px); } }
+  @keyframes from-left { from { opacity: 0; transform: translateX(-40px); } }
 
   /* magnifier lens */
   .lens {
@@ -165,6 +200,8 @@ const photos = limit ? all.slice(0, limit) : all;
     transition: opacity 0.3s;
   }
   .lightbox.magnifying .hint { opacity: 0; }
+  .swipe-hint { display: none; }
+  @media (hover: none) and (pointer: coarse) { .swipe-hint { display: inline; } }
   .cap { max-width: 640px; text-align: center; }
   .cap p { margin: 0; }
   .cap-title { font-size: 0.95rem; opacity: 0.9; }
