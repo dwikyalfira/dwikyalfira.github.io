@@ -101,11 +101,26 @@ const photos = limit ? all.slice(0, limit) : all;
       if (!raf) raf = requestAnimationFrame(placeLens);
     });
 
-    buttons.forEach((b, i) => b.addEventListener('click', () => { setMagnify(false); show(i); dlg.showModal(); }));
+    // lock page scroll while the viewer is open (and keep layout from shifting when the scrollbar disappears)
+    const root = document.documentElement;
+    const lockScroll = () => {
+      const bar = innerWidth - root.clientWidth;
+      root.style.overflow = 'hidden';
+      if (bar > 0) root.style.paddingRight = `${bar}px`;
+    };
+    const unlockScroll = () => {
+      root.style.overflow = '';
+      root.style.paddingRight = '';
+    };
+
+    buttons.forEach((b, i) => b.addEventListener('click', () => { setMagnify(false); show(i); lockScroll(); dlg.showModal(); }));
     dlg.querySelector('.prev')!.addEventListener('click', () => { setMagnify(false); show(cur - 1); });
     dlg.querySelector('.next')!.addEventListener('click', () => { setMagnify(false); show(cur + 1); });
     dlg.querySelector('.close')!.addEventListener('click', () => dlg.close());
-    dlg.addEventListener('close', () => setMagnify(false));
+    dlg.addEventListener('close', () => { setMagnify(false); unlockScroll(); });
+    // swallow wheel/touch scrolling inside the viewer so it never reaches the page
+    dlg.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+    dlg.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
     dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
     dlg.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') { setMagnify(false); show(cur - 1); }
@@ -123,6 +138,7 @@ const photos = limit ? all.slice(0, limit) : all;
   figcaption { display: flex; justify-content: space-between; gap: 12px; padding-top: 8px; font-size: 0.9rem; }
 
   .lightbox {
+    overscroll-behavior: contain;
     max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; padding: 0;
     border: 0; background: rgba(6, 10, 22, 0.94); color: #fff;
   }
