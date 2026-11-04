@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import GalleryGrid from '../components/GalleryGrid.astro';
+import Marquee from '../components/Marquee.astro';
 import { site, about } from '../data/site';
 import { u } from '../utils';
 
@@ -12,7 +13,7 @@ const projects = (await getCollection('projects'))
 ---
 <Base>
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true"><div class="orb"></div></div>
+    <div class="hero-bg" aria-hidden="true"><div class="orb-follow"><div class="orb"></div></div></div>
     <div class="wrap hero-inner">
       <h1>
         Hi, I'm <span class="mark">Dwiky.</span><br />
@@ -35,6 +36,8 @@ const projects = (await getCollection('projects'))
       {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
     </div>
   </section>
+
+  <Marquee />
 
   <section class="section wrap about" aria-labelledby="about">
     <div class="section-head">
@@ -61,6 +64,36 @@ const projects = (await getCollection('projects'))
   </section>
 </Base>
 
+<script>
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const follow = hero?.querySelector<HTMLElement>('.orb-follow');
+  if (hero && follow) {
+    // pause the orb animation while the hero is off-screen
+    new IntersectionObserver(([e]) => hero.classList.toggle('paused', !e.isIntersecting)).observe(hero);
+
+    // gentle mouse parallax, mouse only, one rAF per move, no running loop
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (fine && !reduce) {
+      let raf = 0, nx = 0, ny = 0;
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        nx = (e.clientX - r.left) / r.width - 0.5;
+        ny = (e.clientY - r.top) / r.height - 0.5;
+        if (!raf) raf = requestAnimationFrame(() => {
+          follow.style.setProperty('--mx', `${(nx * 48).toFixed(1)}px`);
+          follow.style.setProperty('--my', `${(ny * 48).toFixed(1)}px`);
+          raf = 0;
+        });
+      });
+      hero.addEventListener('pointerleave', () => {
+        follow.style.setProperty('--mx', '0px');
+        follow.style.setProperty('--my', '0px');
+      });
+    }
+  }
+</script>
+
 <style>
   .hero { position: relative; min-height: min(88vh, 820px); display: grid; align-items: center; isolation: isolate; }
   .hero-bg {
@@ -68,17 +101,31 @@ const projects = (await getCollection('projects'))
     -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
   }
+  /* wrapper follows the mouse (set via --mx/--my); the orb inside drifts + morphs */
+  .orb-follow {
+    position: absolute; width: min(72vw, 760px); aspect-ratio: 1; right: -18vw; bottom: -36%;
+    transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+    transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
+  }
   .orb {
-    position: absolute; border-radius: 50%;
-    width: min(72vw, 760px); aspect-ratio: 1; right: -18vw; bottom: -36%; opacity: 0.9;
-    background: radial-gradient(circle, var(--orb-a) 0%, var(--orb-b) 24%, var(--orb-c) 40%, color-mix(in srgb, var(--blue) 45%, transparent) 58%, transparent 70%);
-    filter: blur(8px);
-    animation: drift 16s ease-in-out infinite alternate;
+    width: 100%; height: 100%; border-radius: 50%; opacity: 0.9;
+    /* closest-side so the colour reaches the edge and the morphing shape is visible */
+    background: radial-gradient(circle closest-side, var(--orb-a) 0%, var(--orb-a) 8%, var(--orb-b) 30%, var(--orb-c) 50%, color-mix(in srgb, var(--blue) 42%, transparent) 76%, color-mix(in srgb, var(--blue) 10%, transparent) 96%);
+    animation: drift 16s ease-in-out infinite alternate, morph 19s ease-in-out infinite;
+    will-change: transform;
   }
   @keyframes drift {
-    from { transform: translate(0, 0) scale(1); }
-    to { transform: translate(-6vw, -8vh) scale(1.08); }
+    from { transform: translate(0, 0) scale(1) rotate(0deg); }
+    to { transform: translate(-6vw, -8vh) scale(1.08) rotate(25deg); }
   }
+  @keyframes morph {
+    0%, 100% { border-radius: 50%; }
+    25% { border-radius: 44% 56% 52% 48% / 56% 44% 56% 44%; }
+    50% { border-radius: 55% 45% 42% 58% / 46% 58% 42% 54%; }
+    75% { border-radius: 47% 53% 58% 42% / 52% 46% 54% 48%; }
+  }
+  .hero.paused .orb { animation-play-state: paused; }
   .hero-inner { padding-block: 72px; position: relative; }
   h1 { font-size: clamp(3rem, 9.5vw, 7.4rem); max-width: 13ch; }
   h1 em { font-style: italic; color: var(--blue); }

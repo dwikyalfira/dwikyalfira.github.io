@@ -1,0 +1,60 @@
+---
+import { skills } from '../data/site';
+
+// one flat list of skills, split into two rows that scroll in opposite directions
+const items = skills.flatMap((s) => s.items);
+const half = Math.ceil(items.length / 2);
+const rows = [items.slice(0, half), items.slice(half)];
+---
+<section class="marquee" aria-label="Skills">
+  {rows.map((row, r) => (
+    <div class:list={['row', { reverse: r === 1 }]}>
+      <div class="track">
+        {[0, 1].map((copy) => (
+          <ul aria-hidden={copy === 1 ? 'true' : undefined}>
+            {row.map((item) => (
+              <li>{item}<span class="sep" aria-hidden="true">✦</span></li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<script>
+  // pause the animation while the marquee is off-screen
+  document.querySelectorAll<HTMLElement>('.marquee').forEach((el) => {
+    new IntersectionObserver(([e]) => el.classList.toggle('paused', !e.isIntersecting)).observe(el);
+  });
+</script>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    padding-block: clamp(20px, 4vw, 40px);
+    border-block: 1px solid var(--line);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .row { display: flex; }
+  .row + .row { margin-top: 6px; }
+  .track {
+    display: flex; flex: none;
+    animation: scroll 46s linear infinite;
+    will-change: transform;
+  }
+  .reverse .track { animation-direction: reverse; animation-duration: 52s; }
+  .marquee:hover .track, .marquee.paused .track { animation-play-state: paused; }
+  ul { display: flex; flex: none; margin: 0; padding: 0; list-style: none; }
+  li {
+    display: flex; align-items: center; white-space: nowrap;
+    font-family: var(--serif); font-size: clamp(1.8rem, 4.6vw, 3.4rem); line-height: 1.2;
+    color: var(--ink);
+  }
+  .reverse li { color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 55%, transparent); }
+  .sep { color: var(--red); font-size: 0.45em; margin-inline: 0.9em; -webkit-text-stroke: 0; }
+  @keyframes scroll {
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+</style>

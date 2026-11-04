@@ -40,6 +40,31 @@ const num = String(index + 1).padStart(2, '0');
   </a>
 </article>
 
+<script>
+  // subtle 3D tilt on project frames: mouse only, one rAF per move, no running loop
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLElement>('.card .frame').forEach((frame) => {
+      let raf = 0, nx = 0, ny = 0;
+      frame.addEventListener('pointermove', (e) => {
+        const r = frame.getBoundingClientRect();
+        nx = (e.clientX - r.left) / r.width - 0.5;
+        ny = (e.clientY - r.top) / r.height - 0.5;
+        if (!raf) raf = requestAnimationFrame(() => {
+          frame.classList.add('tilting');
+          frame.style.setProperty('--ry', `${(nx * 10).toFixed(2)}deg`);
+          frame.style.setProperty('--rx', `${(-ny * 8).toFixed(2)}deg`);
+          raf = 0;
+        });
+      });
+      frame.addEventListener('pointerleave', () => {
+        frame.classList.remove('tilting');
+        frame.style.setProperty('--rx', '0deg');
+        frame.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+</script>
+
 <style>
   .link { display: grid; gap: 20px; text-decoration: none; color: inherit; }
   .link:hover { color: inherit; }
@@ -47,7 +72,11 @@ const num = String(index + 1).padStart(2, '0');
     position: relative; overflow: hidden; border-radius: var(--radius);
     aspect-ratio: 16 / 11; background: #1f4fb4;
     display: grid; place-items: center; isolation: isolate;
+    /* tilt: --rx/--ry are set by the script on mouse devices */
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
+  .frame.tilting { transition-duration: 0.15s; }
   .orb {
     position: absolute; width: 70%; aspect-ratio: 1; right: -22%; bottom: -38%; border-radius: 50%; z-index: -1;
     background: radial-gradient(circle, #ff3d7f 0%, #f5b8c4 26%, #f3efd0 44%, transparent 70%);
@@ -59,6 +88,16 @@ const num = String(index + 1).padStart(2, '0');
     border-radius: 10px; box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.55);
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
+  /* staggered entrance once the card scrolls into view (uses `translate`, so hover `transform` still works) */
+  .card .shot {
+    opacity: 0; translate: 0 18%;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.7s ease, translate 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .card.in .shot { opacity: 1; translate: 0 0; }
+  .card.in .s0 { transition-delay: 0s, 0.15s, 0.15s; }
+  .card.in .s1 { transition-delay: 0s, 0.3s, 0.3s; }
+  .card.in .s2 { transition-delay: 0s, 0.45s, 0.45s; }
+  :global(.no-js) .card .shot { opacity: 1; translate: none; }
   .mobile .shot, .design .shot { height: 84%; width: auto; max-width: 28%; object-fit: contain; border-radius: 12px; }
   .mobile .s1, .design .s1 { transform: translateY(-6%); }
   .web .shot { width: 92%; border-radius: 8px; }
