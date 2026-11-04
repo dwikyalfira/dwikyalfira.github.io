@@ -101,7 +101,9 @@ const projects = (await getCollection('projects'))
     to { opacity: 1; transform: none; }
   }
   .hero-inner { padding-block: 72px; position: relative; }
-  h1 { font-size: clamp(3rem, 9.5vw, 7.4rem); max-width: 13ch; }
+  /* calmer, lower-key headline: smaller size, more air between lines */
+  h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.12; max-width: 16ch; letter-spacing: -0.005em; }
+  h1 .mark { padding: 0 0.1em; }
   h1 em { font-style: italic; color: var(--blue); }
   .lede { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 42ch; color: var(--muted); margin: 28px 0 36px; }
   .actions { display: flex; gap: 12px; flex-wrap: wrap; }
