@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+---
+<Base title="Gallery" description="Photographs: places, light, and small moments.">
+  <section class="wrap page-head">
+    <p class="eyebrow">Gallery</p>
+    <h1>Through my <span class="mark">lens.</span></h1>
+    <p class="muted lede">Places, light, and small moments, collected between building things.</p>
+  </section>
+  <section class="wrap section body">
+    <GalleryGrid />
+  </section>
+</Base>
+
+<style>
+  .page-head { padding-block: clamp(56px, 10vw, 120px) 0; }
+  .page-head h1 { font-size: clamp(2.8rem, 8vw, 6rem); margin-top: 16px; }
+  .lede { max-width: 46ch; font-size: 1.1rem; margin-top: 24px; }
+  .body { padding-top: 56px; }
+</style>

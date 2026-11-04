@@ -1,0 +1,15 @@
+# build
+dist/
+.astro/
+node_modules/
+
+# bahan referensi pribadi (CV, dll.) — jangan di-push
+_referensi/
+
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# editor/agent config lokal
+.claude/

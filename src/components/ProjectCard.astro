@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { u } from '../utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index?: number;
+}
+const { project, index = 0 } = Astro.props;
+const p = project.data;
+const isWeb = p.kind === 'web';
+const screens = isWeb ? [p.cover] : (p.images.length ? p.images : [p.cover]).slice(0, 3);
+const num = String(index + 1).padStart(2, '0');
+---
+<article class="card reveal">
+  <a href={u(`/projects/${project.id}/`)} class="link" aria-label={`${p.title}: ${p.subtitle}`}>
+    <div class:list={['frame', p.kind]}>
+      <span class="orb" aria-hidden="true"></span>
+      <div class="screens">
+        {screens.map((img, i) => (
+          <Image
+            src={img}
+            alt=""
+            widths={isWeb ? [480, 800, 1200] : [200, 320, 440]}
+            sizes={isWeb ? '(min-width: 900px) 540px, 92vw' : '(min-width: 900px) 160px, 28vw'}
+            loading={index < 2 ? 'eager' : 'lazy'}
+            class:list={['shot', `s${i}`]}
+          />
+        ))}
+      </div>
+    </div>
+    <div class="meta">
+      <span class="eyebrow">{num} · {p.year} · {p.kind}</span>
+      <h3>{p.title} <span class="arrow" aria-hidden="true">→</span></h3>
+      <p class="muted sub">{p.subtitle}</p>
+      <p class="summary">{p.summary}</p>
+      <ul class="chips">{p.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+    </div>
+  </a>
+</article>
+
+<style>
+  .link { display: grid; gap: 20px; text-decoration: none; color: inherit; }
+  .link:hover { color: inherit; }
+  .frame {
+    position: relative; overflow: hidden; border-radius: var(--radius);
+    aspect-ratio: 16 / 11; background: #1f4fb4;
+    display: grid; place-items: center; isolation: isolate;
+  }
+  .orb {
+    position: absolute; width: 70%; aspect-ratio: 1; right: -22%; bottom: -38%; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, #ff3d7f 0%, #f5b8c4 26%, #f3efd0 44%, transparent 70%);
+    transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .link:hover .orb { transform: translate(-12%, -10%) scale(1.1); }
+  .screens { display: flex; gap: 4%; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 7% 8%; }
+  .shot {
+    border-radius: 10px; box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.55);
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .mobile .shot, .design .shot { height: 84%; width: auto; max-width: 28%; object-fit: contain; border-radius: 12px; }
+  .mobile .s1, .design .s1 { transform: translateY(-6%); }
+  .web .shot { width: 92%; border-radius: 8px; }
+  .link:hover .shot { transform: translateY(-3%); }
+  .link:hover .s1 { transform: translateY(-9%); }
+
+  .meta { display: grid; gap: 6px; }
+  h3 { font-size: clamp(1.8rem, 3.4vw, 2.4rem); }
+  .arrow { display: inline-block; font-family: var(--sans); font-size: 0.6em; transition: transform 0.3s; color: var(--red); }
+  .link:hover .arrow { transform: translateX(6px); }
+  .sub { margin: 0; font-size: 0.95rem; }
+  .summary { margin: 6px 0 10px; max-width: 52ch; }
+</style>

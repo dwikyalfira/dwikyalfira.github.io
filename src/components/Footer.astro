@@ -1,0 +1,37 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer" id="contact">
+  <div class="wrap inner">
+    <p class="eyebrow">Contact</p>
+    <h2 class="cta">Ready to learn, build,<br />and <span class="mark">contribute.</span></h2>
+    <a class="mail" href={`mailto:${site.email}`}>{site.email} <span aria-hidden="true">↗</span></a>
+    <div class="bottom">
+      <ul class="socials">
+        {site.socials.map((s) => (
+          <li><a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+        ))}
+        <li><a href={`mailto:${site.email}`}>Email</a></li>
+      </ul>
+      <p class="muted small">© {year} {site.name} · {site.location}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--line); padding-block: clamp(64px, 10vw, 112px) 32px; position: relative; overflow: hidden; }
+  .footer::before {
+    content: ''; position: absolute; width: 560px; height: 560px; right: -220px; top: -280px; border-radius: 50%;
+    background: radial-gradient(circle, var(--orb-a) 0%, var(--orb-b) 25%, var(--orb-c) 42%, transparent 68%);
+    opacity: 0.35; filter: blur(30px); pointer-events: none;
+  }
+  .inner { position: relative; }
+  .cta { font-size: clamp(2.4rem, 7vw, 5rem); margin: 16px 0 28px; }
+  .mail { font-size: clamp(1.1rem, 3vw, 1.6rem); text-decoration: none; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+  .mail:hover { border-color: var(--blue); }
+  .bottom { margin-top: clamp(56px, 8vw, 96px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .socials { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
+  .socials a { text-decoration: none; }
+  .small { font-size: 0.85rem; margin: 0; }
+</style>
