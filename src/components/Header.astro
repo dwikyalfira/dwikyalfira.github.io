@@ -52,7 +52,14 @@ const isActive = (href: string) => path.startsWith(u(href));
     display: grid; place-items: center;
     width: 34px; height: 34px; border-radius: 10px;
     background: radial-gradient(circle at 75% 85%, #ff3d7f, #f3efd0 40%, #1f4fb4 78%);
-    color: #fff; font-family: var(--serif); font-size: 1.05rem; line-height: 1;
+    color: #fff; font-family: var(--serif); font-size: 0.92rem; line-height: 1;
+    position: relative;
+  }
+  /* ⭕ ring around the "da" initials */
+  .logo-mark::before {
+    content: ''; position: absolute; inset: 4px; border-radius: 50%;
+    border: 2.5px solid #e0302b;
+    box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.35);
   }
   .logo-name { font-family: var(--serif); font-size: 1.25rem; }
   nav { display: flex; align-items: center; gap: clamp(14px, 3vw, 28px); font-size: 0.95rem; }
