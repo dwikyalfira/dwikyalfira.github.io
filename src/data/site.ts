@@ -5,7 +5,7 @@ export const site = {
   initials: 'DA',
   role: 'Software Engineer',
   location: 'Padang, Indonesia',
-  tagline: 'Crafting seamless digital experiences across Android, web, and UI/UX, with a user-centric design mindset.',
+  tagline: 'I build Android apps and websites, and enjoy working on the design side too.',
   description:
     'Muhammad Dwiky Alfira — Software Engineering graduate building Android apps, websites, and thoughtful UI/UX. Bangkit Academy distinction graduate & IISMA awardee.',
   email: 'dwikyalfira1@gmail.com',
