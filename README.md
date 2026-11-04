@@ -17,13 +17,12 @@ npm run build    # hasil build ada di dist/
 | Nama, tagline, email, link sosial, bio, skill, pengalaman | `src/data/site.ts` |
 | Proyek (tambah / edit) | `src/content/projects/*.md` |
 | Screenshot proyek | `src/assets/projects/<nama-proyek>/` |
-| Foto galeri | taruh JPG/PNG di `src/assets/gallery/` |
-| Keterangan foto galeri (opsional) | `src/data/gallery.ts` |
+| Foto galeri (dari Pexels) | `src/data/gallery.ts` |
 | Warna & font | `src/styles/global.css` (bagian `:root`) |
 
 **Menambah proyek baru:** salin salah satu file `.md` di `src/content/projects/`, ganti isinya, lalu taruh gambarnya di `src/assets/projects/<slug>/`. Isi `links:` dengan `github`, `live`, atau `figma` agar tombolnya muncul.
 
-**Galeri:** selama `src/assets/gallery/` masih kosong, halaman galeri menampilkan placeholder abstrak. Begitu foto ditambahkan, placeholder otomatis diganti dengan foto asli.
+**Galeri:** foto dimuat langsung dari akun Pexels Anda. Untuk menambah foto, salin ID dari URL foto Pexels (mis. `pexels.com/photo/40748182/` → `40748182`), lalu tambahkan satu baris di `photos` pada `src/data/gallery.ts`.
 
 ## Deploy ke GitHub Pages
 
