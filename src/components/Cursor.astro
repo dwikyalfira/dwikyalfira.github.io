@@ -1,0 +1,83 @@
+---
+// Custom cursor: a small dot + a trailing gradient ring that grows over links.
+// Only active on devices with a precise pointer (mouse); touch devices keep the default.
+---
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<script>
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  const dot = document.querySelector<HTMLElement>('.cursor-dot');
+  const ring = document.querySelector<HTMLElement>('.cursor-ring');
+
+  if (fine.matches && dot && ring) {
+    const root = document.documentElement;
+    root.classList.add('has-cursor');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let x = -100, y = -100, rx = -100, ry = -100;
+
+    addEventListener('mousemove', (e) => {
+      x = e.clientX; y = e.clientY;
+      dot.style.transform = `translate(${x}px, ${y}px)`;
+      root.classList.remove('cursor-out');
+    }, { passive: true });
+
+    const tick = () => {
+      const k = reduce ? 1 : 0.18;
+      rx += (x - rx) * k; ry += (y - ry) * k;
+      ring.style.transform = `translate(${rx}px, ${ry}px)`;
+      requestAnimationFrame(tick);
+    };
+    tick();
+
+    const interactive = 'a, button, [role="button"], label, summary, .open';
+    document.addEventListener('mouseover', (e) => {
+      const t = e.target as Element;
+      root.classList.toggle('cursor-hover', !!t.closest?.(interactive));
+      root.classList.toggle('cursor-text', !!t.closest?.('input, textarea, [contenteditable]'));
+    });
+    document.addEventListener('mousedown', () => root.classList.add('cursor-down'));
+    document.addEventListener('mouseup', () => root.classList.remove('cursor-down'));
+    document.addEventListener('mouseleave', () => root.classList.add('cursor-out'));
+  }
+</script>
+
+<style is:global>
+  .cursor-dot, .cursor-ring { display: none; }
+
+  .has-cursor, .has-cursor * { cursor: none !important; }
+  .has-cursor.cursor-text input, .has-cursor.cursor-text textarea { cursor: text !important; }
+  /* dialogs render in the top layer above the custom cursor, so use the native one there */
+  .has-cursor dialog[open], .has-cursor dialog[open] * { cursor: auto !important; }
+  .has-cursor dialog[open] button { cursor: pointer !important; }
+
+  .has-cursor .cursor-dot,
+  .has-cursor .cursor-ring {
+    display: block;
+    position: fixed; left: 0; top: 0; z-index: 1000;
+    pointer-events: none; border-radius: 50%;
+  }
+  .has-cursor .cursor-dot {
+    width: 8px; height: 8px; margin: -4px 0 0 -4px;
+    background: var(--red);
+    transition: opacity 0.2s, width 0.2s, height 0.2s, margin 0.2s;
+  }
+  .has-cursor .cursor-ring {
+    width: 36px; height: 36px; margin: -18px 0 0 -18px;
+    border: 1.5px solid color-mix(in srgb, var(--ink) 55%, transparent);
+    transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+      margin 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.35s, border-color 0.35s, opacity 0.2s;
+  }
+
+  /* over links & buttons: ring blooms into a soft gradient orb */
+  .cursor-hover .cursor-ring {
+    width: 64px; height: 64px; margin: -32px 0 0 -32px;
+    border-color: transparent;
+    background: radial-gradient(circle, rgba(255, 61, 127, 0.45) 0%, rgba(243, 239, 208, 0.35) 45%, rgba(31, 79, 180, 0.15) 70%, transparent 72%);
+  }
+  .cursor-hover .cursor-dot { width: 4px; height: 4px; margin: -2px 0 0 -2px; }
+
+  .cursor-down .cursor-ring { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
+  .cursor-out .cursor-dot, .cursor-out .cursor-ring,
+  .cursor-text .cursor-dot, .cursor-text .cursor-ring { opacity: 0; }
+</style>
