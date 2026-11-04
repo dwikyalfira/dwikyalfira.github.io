@@ -2,7 +2,7 @@
 title: KataMata
 subtitle: Final Thesis Project
 year: 2026
-order: 1
+order: 2
 featured: true
 kind: mobile
 summary: A native Android app for early detection of eye cataracts, running a trained CNN model fully on-device.

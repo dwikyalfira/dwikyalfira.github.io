@@ -16,7 +16,11 @@ const { project, next } = Astro.props;
 const p = project.data;
 const { Content } = await render(project);
 const isWeb = p.kind === 'web';
-const linkLabels = { live: 'Visit website', github: 'View on GitHub', figma: 'Open in Figma' } as const;
+const linkLabels = {
+  live: p.kind === 'web' ? 'Visit website' : 'Try it live',
+  github: 'View on GitHub',
+  figma: 'Open in Figma',
+} as const;
 const links = Object.entries(p.links).filter(([, v]) => v) as [keyof typeof linkLabels, string][];
 ---
 <Base title={p.title} description={p.summary} image={p.cover.src}>

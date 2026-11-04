@@ -2,7 +2,7 @@
 title: PNP Mobile
 subtitle: Redesigning campus access for mobile
 year: 2023
-order: 4
+order: 5
 featured: false
 kind: design
 summary: A mobile-first redesign of the SPADATI campus web portal, focused on clarity, speed, and students on the go.

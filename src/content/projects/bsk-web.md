@@ -2,7 +2,7 @@
 title: BSK Web
 subtitle: Company Website — PT Batusangkar Indah Transport
 year: 2026
-order: 2
+order: 3
 featured: true
 kind: web
 summary: A production website for a Padang – Batusangkar travel company, built for speed, clarity, and easy booking.

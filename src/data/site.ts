@@ -31,7 +31,7 @@ export const about = {
 };
 
 export const skills = [
-  { group: 'Mobile', items: ['Kotlin', 'Android SDK', 'Jetpack Compose', 'Coroutines', 'Dagger / Hilt', 'TensorFlow Lite'] },
+  { group: 'Mobile', items: ['Kotlin', 'Android SDK', 'Flutter', 'Dart', 'Jetpack Compose', 'Coroutines', 'Dagger / Hilt', 'TensorFlow Lite'] },
   { group: 'Web', items: ['HTML', 'CSS', 'JavaScript', 'Web Hosting'] },
   { group: 'Design', items: ['Figma', 'UI/UX', 'User Research', 'Prototyping'] },
   { group: 'Practice', items: ['MVVM', 'Clean Architecture', 'Git', 'Android Studio', 'VS Code'] },

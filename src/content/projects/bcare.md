@@ -2,8 +2,8 @@
 title: BCare
 subtitle: Bangkit Academy Capstone Project
 year: 2023
-order: 3
-featured: true
+order: 4
+featured: false
 kind: mobile
 role: Android Developer
 summary: An Android app to help detect and address postpartum baby blues in new mothers, built with ML and Cloud engineers.
