@@ -77,6 +77,29 @@ export const photos: Photo[] = [
   { id: '40748076', w: 3, h: 2, title: 'Cloudy day', place: 'Porto, Portugal' },
 ];
 
+import photoMeta from './photo-meta.json';
+
+type RawMeta = { make?: string; camera?: string; aperture?: number; focal?: number; iso?: number; shutter?: number; taken?: string };
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** Formatted camera info for a photo (from src/data/photo-meta.json), or undefined if unknown. */
+export function photoInfo(id: string) {
+  const m = (photoMeta as Record<string, RawMeta | string>)[id];
+  if (!m || typeof m === 'string') return undefined;
+  const camera = [m.make, m.camera].filter(Boolean).join(' ') || undefined;
+  const shutter = m.shutter ? (m.shutter >= 1 ? `${m.shutter}s` : `1/${Math.round(1 / m.shutter)}s`) : undefined;
+  const settings = [
+    m.focal && `${m.focal}mm`,
+    m.aperture && `f/${Number(m.aperture.toFixed(1))}`,
+    shutter,
+    m.iso && `ISO ${m.iso}`,
+  ].filter(Boolean).join(' · ') || undefined;
+  // date only, read straight from the stored camera clock (no timezone conversion)
+  const d = m.taken?.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const date = d ? `${MONTHS[+d[2] - 1]} ${+d[3]}, ${d[1]}` : undefined;
+  return { camera, settings, date };
+}
+
 const base = (id: string) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb`;
 export const pexelsSrc = (id: string, w: number) => `${base(id)}&w=${w}`;
 export const pexelsSrcset = (id: string) => [400, 700, 1000, 1400].map((w) => `${pexelsSrc(id, w)} ${w}w`).join(', ');

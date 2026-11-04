@@ -1,5 +1,5 @@
 ---
-import { getPhotos, pexelsSrc, pexelsSrcset } from '../data/gallery';
+import { getPhotos, pexelsSrc, pexelsSrcset, photoInfo } from '../data/gallery';
 
 interface Props {
   limit?: number;
@@ -9,8 +9,10 @@ const all = await getPhotos();
 const photos = limit ? all.slice(0, limit) : all;
 ---
 <div class="masonry" data-gallery>
-  {photos.map((p, i) => (
-    <figure class="item reveal">
+  {photos.map((p, i) => {
+    const info = photoInfo(p.id);
+    return (
+    <figure class="item reveal" data-camera={info?.camera} data-settings={info?.settings} data-date={info?.date}>
       <button type="button" class="open" data-index={i} aria-label={`Open photo: ${p.title}`}>
         <img
           src={pexelsSrc(p.id, 700)}
@@ -29,13 +31,17 @@ const photos = limit ? all.slice(0, limit) : all;
         {p.place && <span class="eyebrow">{p.place}</span>}
       </figcaption>
     </figure>
-  ))}
+    );
+  })}
 </div>
 
 <dialog class="lightbox" aria-label="Photo viewer">
   <img alt="" />
   <div class="lens" aria-hidden="true"></div>
-  <p class="cap"></p>
+  <div class="cap">
+    <p class="cap-title"></p>
+    <p class="exif"></p>
+  </div>
   <p class="hint">Click or tap the photo to magnify</p>
   <button type="button" class="nav prev" aria-label="Previous photo">←</button>
   <button type="button" class="nav next" aria-label="Next photo">→</button>
@@ -48,7 +54,8 @@ const photos = limit ? all.slice(0, limit) : all;
   if (grid && dlg) {
     const buttons = [...grid.querySelectorAll<HTMLButtonElement>('.open')];
     const img = dlg.querySelector('img')!;
-    const cap = dlg.querySelector<HTMLElement>('.cap')!;
+    const capTitle = dlg.querySelector<HTMLElement>('.cap-title')!;
+    const exif = dlg.querySelector<HTMLElement>('.exif')!;
     let cur = 0;
     const show = (i: number) => {
       cur = (i + buttons.length) % buttons.length;
@@ -56,7 +63,10 @@ const photos = limit ? all.slice(0, limit) : all;
       img.src = src.dataset.full ?? src.currentSrc;
       img.alt = src.alt;
       const fc = buttons[cur].parentElement?.querySelector('figcaption');
-      cap.textContent = fc ? [...fc.children].map((c) => c.textContent?.trim()).filter(Boolean).join(' · ') : '';
+      capTitle.textContent = fc ? [...fc.children].map((c) => c.textContent?.trim()).filter(Boolean).join(' · ') : '';
+      const d = buttons[cur].closest<HTMLElement>('figure')?.dataset ?? {};
+      exif.textContent = [d.camera, d.settings, d.date].filter(Boolean).join('  ·  ');
+      exif.hidden = !exif.textContent;
     };
     // ---- magnifier: click the photo to toggle a lens that follows the pointer ----
     const lens = dlg.querySelector<HTMLElement>('.lens')!;
@@ -113,9 +123,9 @@ const photos = limit ? all.slice(0, limit) : all;
     max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; padding: 0;
     border: 0; background: rgba(6, 10, 22, 0.94); color: #fff;
   }
-  .lightbox[open] { display: grid; place-items: center; }
+  .lightbox[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 56px 16px 24px; }
   .lightbox::backdrop { background: transparent; }
-  .lightbox img { max-width: 92vw; max-height: 82vh; object-fit: contain; border-radius: 6px; cursor: zoom-in; }
+  .lightbox img { max-width: min(92vw, 100%); max-height: calc(100vh - 200px); object-fit: contain; border-radius: 6px; cursor: zoom-in; }
   .lightbox.magnifying img { cursor: zoom-out; touch-action: none; }
 
   /* magnifier lens */
@@ -136,7 +146,13 @@ const photos = limit ? all.slice(0, limit) : all;
     transition: opacity 0.3s;
   }
   .lightbox.magnifying .hint { opacity: 0; }
-  .cap { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; margin: 0; font-size: 0.9rem; opacity: 0.8; }
+  .cap { max-width: 640px; text-align: center; }
+  .cap p { margin: 0; }
+  .cap-title { font-size: 0.95rem; opacity: 0.9; }
+  .exif {
+    margin-top: 6px !important; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
+    opacity: 0.6; white-space: pre-wrap;
+  }
   .lightbox button {
     position: absolute; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 1.1rem; cursor: pointer;
