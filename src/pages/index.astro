@@ -14,7 +14,6 @@ const projects = (await getCollection('projects'))
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"><div class="orb"></div></div>
     <div class="wrap hero-inner">
-      <p class="status eyebrow"><span class="dot" aria-hidden="true"></span>{site.status} · {site.location}</p>
       <h1>
         Hi, I'm <span class="mark">Dwiky.</span><br />
         <em>Software engineer</em> who designs.
@@ -81,8 +80,6 @@ const projects = (await getCollection('projects'))
     to { transform: translate(-6vw, -8vh) scale(1.08); }
   }
   .hero-inner { padding-block: 72px; position: relative; }
-  .status { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 28px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px color-mix(in srgb, #22c55e 25%, transparent); }
   h1 { font-size: clamp(3rem, 9.5vw, 7.4rem); max-width: 13ch; }
   h1 em { font-style: italic; color: var(--blue); }
   .lede { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 42ch; color: var(--muted); margin: 28px 0 36px; }
