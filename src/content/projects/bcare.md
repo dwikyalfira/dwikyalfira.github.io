@@ -9,7 +9,8 @@ role: Android Developer
 summary: An Android app for early screening of postpartum baby blues, made with ML and Cloud teammates at Bangkit Academy.
 outcome: We delivered a working Android MVP. I built the Android app and connected it to the ML and Cloud parts.
 tags: [Android (Kotlin), Android Studio, MVC, UI/UX Design]
-links: {}
+links:
+  github: https://github.com/dwikyalfira/capstone-project/tree/md
 cover: ../../assets/projects/bcare/2.jpg
 images:
   - ../../assets/projects/bcare/1.jpg

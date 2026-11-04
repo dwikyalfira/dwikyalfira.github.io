@@ -90,5 +90,4 @@ export const photos: Photo[] = [
 
 const base = (id: string) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb`;
 export const pexelsSrc = (id: string, w: number) => `${base(id)}&w=${w}`;
-export const pexelsSrcset = (id: string) => [400, 700, 1000, 1400].map((w) => `${pexelsSrc(id, w)} ${w}w`).join(', ');
 export const pexelsPage = (id: string) => `https://www.pexels.com/photo/${id}/`;

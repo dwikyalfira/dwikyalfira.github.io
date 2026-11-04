@@ -8,8 +8,8 @@ kind: mobile
 summary: An Android app for my final thesis that checks eye photos for signs of cataract, using a CNN model that runs on the phone.
 outcome: The trained CNN model runs on-device with TensorFlow Lite, so the check works without an internet connection.
 tags: [Android (Kotlin), CNN, TensorFlow Lite, UI/UX Design]
-links: {}
-  # github: https://github.com/<username>/katamata
+links:
+  github: https://github.com/dwikyalfira/cataract_detection_app_final_project
 cover: ../../assets/projects/katamata/2.jpg
 images:
   - ../../assets/projects/katamata/1.jpg

@@ -1,6 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import { site, about, skills, strengths, experience } from '../data/site';
+import { getDuolingo, duolingoProfile } from '../data/duolingo';
+
+const duo = await getDuolingo();
+const fmt = (n: number) => n.toLocaleString('en-US');
 ---
 <Base title="About" description={`About ${site.name}: background, skills, and experience.`}>
   <section class="wrap page-head">
@@ -45,7 +49,16 @@ import { site, about, skills, strengths, experience } from '../data/site';
       <p class="eyebrow">Strengths</p>
       <p class="list">{strengths.join(' · ')}</p>
       <p class="eyebrow">Languages</p>
-      <p class="list">Indonesian (native) · English (professional)</p>
+      <p class="list">Indonesian (native) · English (professional) · German (beginner)</p>
+      {duo && (
+        <a class="duo" href={duolingoProfile} target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">🔥</span>
+          <span>
+            <strong>{fmt(duo.streak)}</strong>-day streak on Duolingo<span class="muted"> · {fmt(duo.totalXp)} XP{duo.learning && <> · learning <em>{duo.learning}</em></>}</span>
+          </span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      )}
     </div>
   </section>
 </Base>
@@ -80,4 +93,18 @@ import { site, about, skills, strengths, experience } from '../data/site';
   .strengths { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
   .strengths .eyebrow { margin: 0 0 8px; }
   .list { font-family: var(--serif); font-size: clamp(1.3rem, 2.4vw, 1.75rem); line-height: 1.4; margin: 0 0 28px; }
+  /* Duolingo pill: same look as the site's buttons and chips */
+  .duo {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: -12px 0 28px; padding: 9px 18px;
+    border: 1px solid var(--line); border-radius: 999px;
+    font-size: 0.92rem; line-height: 1.4; text-decoration: none; color: var(--ink);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .duo:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-2px); }
+  .duo strong { font-family: var(--serif); font-weight: 400; font-size: 1.15em; }
+  .duo em { font-style: italic; color: var(--blue); }
+  .duo .arrow { color: var(--red); transition: transform 0.2s; }
+  .duo:hover .arrow { transform: translate(2px, -2px); }
+  @media (max-width: 520px) { .duo { border-radius: 18px; align-items: flex-start; } }
 </style>

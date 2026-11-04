@@ -2,17 +2,15 @@
 export const site = {
   name: 'Muhammad Dwiky Alfira',
   shortName: 'Dwiky',
-  initials: 'DA',
   role: 'Software Engineer',
   location: 'Padang, Indonesia',
   tagline: 'I build Android apps and websites, and enjoy working on the design side too.',
   description:
     'Muhammad Dwiky Alfira, a software engineering graduate who builds Android apps and websites.',
   email: 'dwikyalfira1@gmail.com',
-  status: 'Open to opportunities',
+  url: 'https://dwikyalfira.github.io',
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/dwikyalfira' },
-    // TODO: ganti dengan username GitHub Anda
     { label: 'GitHub', href: 'https://github.com/dwikyalfira' },
   ],
 };

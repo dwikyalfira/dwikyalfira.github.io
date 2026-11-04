@@ -1,0 +1,74 @@
+---
+// Tiny "right now in Padang" line: local time (UTC+7), current weather and US AQI.
+// Weather + air quality come from Open-Meteo (free, no API key), fetched in the browser.
+// If a request fails, that part simply stays hidden.
+const LAT = -0.9492;
+const LON = 100.3543;
+---
+<p class="local muted" data-lat={LAT} data-lon={LON}>
+  <span><span data-time>--:--</span> UTC+7</span>
+  <span class="part" data-weather hidden>· <span data-temp></span>°C <span data-wdesc></span></span>
+  <span class="part" data-air hidden>· <span class="dot" data-aqi-dot aria-hidden="true"></span>AQI <span data-aqi></span></span>
+</p>
+
+<script>
+  const root = document.querySelector<HTMLElement>('.local');
+  if (root) {
+    const { lat, lon } = root.dataset;
+    const $ = (s: string) => root.querySelector<HTMLElement>(s)!;
+    const timeText = $('[data-time]');
+
+    // ---- local time (Asia/Jakarta = UTC+7) ----
+    const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    const tick = () => (timeText.textContent = fmt.format(new Date()));
+    tick();
+    let timer = 0, onScreen = false;
+    const sync = () => {
+      if (onScreen && !document.hidden) { tick(); if (!timer) timer = window.setInterval(tick, 15000); }
+      else { clearInterval(timer); timer = 0; }
+    };
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; sync(); }).observe(root);
+    document.addEventListener('visibilitychange', sync);
+
+    // ---- weather + AQI (Open-Meteo) ----
+    const WMO: [number[], string][] = [
+      [[0], 'clear'], [[1], 'mostly clear'], [[2], 'partly cloudy'], [[3], 'cloudy'],
+      [[45, 48], 'foggy'], [[51, 53, 55, 56, 57], 'drizzle'], [[61, 63, 66], 'rain'], [[65, 67], 'heavy rain'],
+      [[80, 81], 'showers'], [[82], 'heavy showers'], [[95, 96, 99], 'thunderstorm'],
+    ];
+    const AQI: [number, string][] = [
+      [50, '#22c55e'], [100, '#eab308'], [150, '#f97316'], [200, '#ef4444'], [300, '#a855f7'], [Infinity, '#7f1d1d'],
+    ];
+    const load = async () => {
+      const q = `latitude=${lat}&longitude=${lon}&timezone=Asia%2FJakarta`;
+      try {
+        const w = await (await fetch(`https://api.open-meteo.com/v1/forecast?${q}&current=temperature_2m,weather_code`)).json();
+        $('[data-temp]').textContent = String(Math.round(w.current.temperature_2m));
+        $('[data-wdesc]').textContent = WMO.find(([c]) => c.includes(w.current.weather_code))?.[1] ?? '';
+        $('[data-weather]').hidden = false;
+      } catch { /* stay hidden */ }
+      try {
+        const a = await (await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?${q}&current=us_aqi`)).json();
+        const v = Math.round(a.current.us_aqi);
+        $('[data-aqi]').textContent = String(v);
+        $('[data-aqi-dot]').style.background = AQI.find(([max]) => v <= max)![1];
+        $('[data-air]').hidden = false;
+      } catch { /* stay hidden */ }
+    };
+    // load once the footer is near, then refresh every 15 minutes
+    let loaded = false;
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !loaded) { loaded = true; load(); setInterval(() => !document.hidden && load(), 15 * 60 * 1000); }
+    }, { rootMargin: '400px' }).observe(root);
+  }
+</script>
+
+<style>
+  .local {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0 6px;
+    margin: 0; font-size: 0.8rem; line-height: 1.4;
+  }
+  .part[hidden] { display: none; }
+  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: 1px; }
+
+</style>

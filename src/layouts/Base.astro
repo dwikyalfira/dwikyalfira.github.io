@@ -3,18 +3,26 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Cursor from '../components/Cursor.astro';
+import BackToTop from '../components/BackToTop.astro';
 import { site } from '../data/site';
 import { u } from '../utils';
+// preload the two main fonts so headings don't reflow when they arrive (layout shift)
+import serifFont from '@fontsource/dm-serif-display/files/dm-serif-display-latin-400-normal.woff2?url';
+import sansFont from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** structured data (schema.org) for search engines */
+  jsonLd?: Record<string, unknown>;
 }
-const { title, description = site.description, image } = Astro.props;
+const { title, description = site.description, image, jsonLd } = Astro.props;
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} · ${site.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image ? new URL(image, Astro.site).href : undefined;
+// pages without their own image (home, about, gallery…) use the generic share card
+const ogImage = new URL(image ?? u('/og.png'), Astro.site).href;
+const isDefaultImage = !image;
 ---
 <!doctype html>
 <html lang="en" class="no-js">
@@ -24,15 +32,23 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="preload" href={serifFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
     <link rel="sitemap" href={u('/sitemap-index.xml')} />
     <meta name="theme-color" content="#1f4fb4" />
+    <meta name="author" content={site.name} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={ogImage} />
+    {isDefaultImage && <meta property="og:image:width" content="1200" />}
+    {isDefaultImage && <meta property="og:image:height" content="630" />}
+    <meta property="og:image:alt" content={`${site.name}, ${site.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <script is:inline>
       document.documentElement.classList.remove('no-js');
       try {
@@ -48,6 +64,7 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
       <slot />
     </main>
     <Footer />
+    <BackToTop />
     <Cursor />
     <script>
       const io = new IntersectionObserver(

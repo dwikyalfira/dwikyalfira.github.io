@@ -1,12 +1,35 @@
 ---
-import { getPhotos, pexelsSrc, pexelsSrcset, pexelsPage } from '../data/gallery';
+import { getImage } from 'astro:assets';
+import { getPhotos, pexelsSrc, pexelsPage, pexelsProfile } from '../data/gallery';
 
 interface Props {
   limit?: number;
 }
 const { limit } = Astro.props;
 const all = await getPhotos();
-const photos = limit ? all.slice(0, limit) : all;
+const list = limit ? all.slice(0, limit) : all;
+
+// Download each photo from Pexels once at build time and serve resized WebP copies
+// from this site: faster, and no third-party (Cloudflare) cookies for visitors.
+const WIDTHS = [400, 700, 1000, 1400];
+const photos = await Promise.all(
+  list.map(async (p) => {
+    const src = pexelsSrc(p.id, 1800);
+    const size = (width: number) => ({ width, height: Math.round((width * p.h) / p.w) });
+    const [sized, full] = await Promise.all([
+      Promise.all(WIDTHS.map((w) => getImage({ src, ...size(w), format: 'webp' }))),
+      getImage({ src, ...size(1800), format: 'webp', quality: 82 }),
+    ]);
+    return {
+      ...p,
+      src: sized[1].src,
+      srcset: sized.map((img, k) => `${img.src} ${WIDTHS[k]}w`).join(', '),
+      full: full.src,
+    };
+  }),
+);
+// on the gallery page the first row is above the fold: load it right away
+const eager = (i: number) => !limit && i < 3;
 ---
 <div class="masonry" data-gallery>
   {photos.map((p, i) => (
@@ -17,15 +40,16 @@ const photos = limit ? all.slice(0, limit) : all;
     >
       <button type="button" class="open" data-index={i} aria-label={`Open photo: ${p.title}`} style={p.avgColor ? `background:${p.avgColor}` : undefined}>
         <img
-          src={pexelsSrc(p.id, 700)}
-          srcset={pexelsSrcset(p.id)}
+          src={p.src}
+          srcset={p.srcset}
           sizes="(min-width: 1000px) 360px, (min-width: 640px) 46vw, 92vw"
           width={p.w * 100}
           height={p.h * 100}
           alt={p.title}
-          loading="lazy"
+          loading={eager(i) ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 && eager(i) ? 'high' : undefined}
           decoding="async"
-          data-full={pexelsSrc(p.id, 1800)}
+          data-full={p.full}
         />
       </button>
       <figcaption>
@@ -41,7 +65,7 @@ const photos = limit ? all.slice(0, limit) : all;
   <div class="lens" aria-hidden="true"></div>
   <div class="cap">
     <p class="cap-title"></p>
-    <p class="info"><span class="size"></span><a class="src" target="_blank" rel="noopener noreferrer">View on Pexels ↗</a></p>
+    <p class="info"><span class="size"></span><a class="src" href={pexelsProfile} target="_blank" rel="noopener noreferrer">View on Pexels ↗</a></p>
   </div>
   <p class="hint">Click or tap the photo to magnify<span class="swipe-hint"> · swipe to browse</span></p>
   <button type="button" class="nav prev" aria-label="Previous photo">←</button>

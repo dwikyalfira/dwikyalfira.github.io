@@ -9,4 +9,7 @@ export default defineConfig({
   site: 'https://dwikyalfira.github.io',
   base: '/',
   integrations: [sitemap()],
+  // gallery photos are downloaded from Pexels at build time and served from this site
+  // (optimised to WebP, no third-party cookies for visitors)
+  image: { domains: ['images.pexels.com'] },
 });

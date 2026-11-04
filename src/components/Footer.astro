@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import LocalNow from './LocalNow.astro';
 const year = new Date().getFullYear();
 ---
 <footer class="footer" id="contact">
@@ -14,7 +15,10 @@ const year = new Date().getFullYear();
         ))}
         <li><a href={`mailto:${site.email}`}>Email</a></li>
       </ul>
-      <p class="muted small">© {year} {site.name} · {site.location}</p>
+      <div class="meta">
+        <LocalNow />
+        <p class="muted small">© {year} {site.name} · {site.location}</p>
+      </div>
     </div>
   </div>
 </footer>
@@ -30,7 +34,15 @@ const year = new Date().getFullYear();
   .cta { font-size: clamp(2.2rem, 5vw, 3.6rem); margin: 16px 0 28px; }
   .mail { font-size: clamp(1.1rem, 3vw, 1.6rem); text-decoration: none; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
   .mail:hover { border-color: var(--blue); }
-  .bottom { margin-top: clamp(56px, 8vw, 96px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom { margin-top: clamp(56px, 8vw, 96px); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; }
+  .meta { display: grid; justify-items: end; gap: 6px; }
+  .meta :global(.local) { justify-content: flex-end; }
+  @media (max-width: 640px) {
+    /* leave room so the back-to-top button never covers the last line */
+    .footer { padding-bottom: 84px; }
+    .meta { justify-items: start; }
+    .meta :global(.local) { justify-content: flex-start; }
+  }
   .socials { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
   .socials a { text-decoration: none; }
   .small { font-size: 0.85rem; margin: 0; }

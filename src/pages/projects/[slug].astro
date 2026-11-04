@@ -23,7 +23,7 @@ const linkLabels = {
 } as const;
 const links = Object.entries(p.links).filter(([, v]) => v) as [keyof typeof linkLabels, string][];
 ---
-<Base title={p.title} description={p.summary} image={p.cover.src}>
+<Base title={p.title} description={p.summary}>
   <article>
     <header class="wrap head">
       <a href={u('/projects/')} class="eyebrow back">← All work</a>

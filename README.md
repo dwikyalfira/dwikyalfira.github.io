@@ -26,6 +26,12 @@ npm run build    # hasil build ada di dist/
 
 **Galeri manual (cadangan):** foto dimuat langsung dari akun Pexels Anda. Untuk menambah foto, salin ID dari URL foto Pexels (mis. `pexels.com/photo/40748182/` → `40748182`), lalu tambahkan satu baris di `photos` pada `src/data/gallery.ts`.
 
+## Lain-lain
+
+- **Gambar preview saat link dibagikan** (WhatsApp, LinkedIn, X): `public/og.png`. Kalau nama/tagline berubah, buat ulang dengan `node scripts/og.mjs`.
+- **Foto galeri** diunduh dari Pexels saat build lalu disajikan dari web ini (WebP, tanpa cookie pihak ketiga).
+- **Duolingo** (`src/data/duolingo.ts`) dan **cuaca/AQI Padang** di footer (`src/components/LocalNow.astro`) diambil otomatis; kalau sumbernya gagal, bagian itu disembunyikan.
+
 ## Deploy ke GitHub Pages
 
 1. Buat repo baru di GitHub.

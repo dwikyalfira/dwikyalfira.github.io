@@ -4,13 +4,29 @@ import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import GalleryGrid from '../components/GalleryGrid.astro';
 import { site, about } from '../data/site';
+import { pexelsProfile } from '../data/gallery';
+import { duolingoProfile } from '../data/duolingo';
 import { u } from '../utils';
+
+// schema.org Person, so search engines can connect the name to these profiles
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  image: `${site.url}/og.png`,
+  sameAs: [...site.socials.map((s) => s.href), pexelsProfile, duolingoProfile],
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Politeknik Negeri Padang' },
+  knowsLanguage: ['Indonesian', 'English', 'German'],
+};
 
 const projects = (await getCollection('projects'))
   .filter((p) => p.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
 ---
-<Base>
+<Base jsonLd={person}>
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"><div class="orb"></div></div>
     <div class="wrap hero-inner">
