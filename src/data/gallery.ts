@@ -32,7 +32,7 @@ async function loadCollection(): Promise<Photo[]> {
         await res.json();
       for (const m of data.media) {
         const manual = photos.find((p) => p.id === String(m.id));
-        out.push(manual ?? { id: String(m.id), w: m.width, h: m.height, title: m.alt?.trim() || 'Photograph' });
+        out.push(manual ?? { id: String(m.id), w: m.width, h: m.height, ...tidyAlt(m.alt) });
       }
       url = data.next_page;
     }
@@ -42,6 +42,24 @@ async function loadCollection(): Promise<Photo[]> {
     console.warn('[gallery] Could not load Pexels collection, using manual list:', err);
     return photos;
   }
+}
+
+/** Turn Pexels alt text into a short caption title (+ place when it names one). */
+function tidyAlt(raw?: string): { title: string; place?: string } {
+  let t = (raw ?? '').trim().replace(/^free stock photo of\s*/i, '').replace(/\.$/, '');
+  if (!t) return { title: 'Photograph' };
+  let place: string | undefined;
+  const loc = t.match(/\s+(?:in|of|at)\s+([A-Z][\w'-]*(?:\s[A-Z][\w'-]*)*,\s*[A-Z][\w'-]*(?:\s[A-Z][\w'-]*)*)/);
+  if (loc) {
+    place = loc[1];
+    t = t.slice(0, loc.index) + t.slice((loc.index ?? 0) + loc[0].length);
+  }
+  // keyword-style alt ("architecture, atmospheric, busy") -> first keyword
+  if (!/\s(a|an|the|of|over|with)\s/i.test(` ${t} `) && t.includes(',')) t = t.split(',')[0];
+  // long sentence -> cut at the first clause
+  if (t.length > 48) t = t.split(/,|\s(?:spanning|capturing|with|accompanied)\s/)[0];
+  t = t.replace(/^(a|an|the)\s+/i, '').trim();
+  return { title: t.charAt(0).toUpperCase() + t.slice(1), place };
 }
 
 export const photos: Photo[] = [
