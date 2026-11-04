@@ -5,8 +5,8 @@ year: 2023
 order: 5
 featured: false
 kind: design
-summary: A mobile-first redesign of the SPADATI campus web portal, focused on clarity, speed, and students on the go.
-outcome: Delivered a high-fidelity mobile design that simplifies complex academic workflows and improves discoverability of campus services.
+summary: "A UI/UX exercise: redesigning the SPADATI campus portal for mobile."
+outcome: A high-fidelity Figma prototype covering onboarding, home, and course pages.
 tags: [Figma (UI/UX), User Research, Prototyping]
 links: {}
 cover: ../../assets/projects/pnp-mobile/2.jpg
@@ -16,11 +16,11 @@ images:
   - ../../assets/projects/pnp-mobile/3.jpg
 ---
 
-PNP Mobile is a UI/UX case study that transforms the **SPADATI** web interface of Politeknik Negeri Padang into a streamlined mobile experience.
+PNP Mobile is a UI/UX exercise where I redesigned the **SPADATI** web portal of Politeknik Negeri Padang as a mobile app.
 
 ## Approach
 
-- **User research** to understand how students use campus services on the go.
-- **Improved information architecture** around what students check daily: schedule, upcoming classes, and assignments.
-- **Accessibility enhancements** and simplified workflows for clarity and speed.
-- **High-fidelity prototype** in Figma covering onboarding, home, and course detail.
+- Talked to students to see which features they use most.
+- Put the things students check daily (schedule, upcoming classes, assignments) up front.
+- Kept the layout simple and readable on small screens.
+- Made a high-fidelity prototype in Figma for onboarding, home, and course detail.

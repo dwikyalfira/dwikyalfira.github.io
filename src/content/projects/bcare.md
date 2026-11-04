@@ -6,8 +6,8 @@ order: 4
 featured: false
 kind: mobile
 role: Android Developer
-summary: An Android app to help detect and address postpartum baby blues in new mothers, built with ML and Cloud engineers.
-outcome: Delivered a functional Android MVP that bridges cross-functional engineering (ML & Cloud) with empathy-driven UI design — a safe digital space for early postpartum baby blues screening.
+summary: An Android app for early screening of postpartum baby blues, made with ML and Cloud teammates at Bangkit Academy.
+outcome: We delivered a working Android MVP. I built the Android app and connected it to the ML and Cloud parts.
 tags: [Android (Kotlin), Android Studio, MVC, UI/UX Design]
 links: {}
 cover: ../../assets/projects/bcare/2.jpg
@@ -17,11 +17,10 @@ images:
   - ../../assets/projects/bcare/3.jpg
 ---
 
-BCare was our capstone project at **Bangkit Academy 2023**. As the **Android Developer** in a cross-functional team of six, I worked closely with Machine Learning and Cloud engineers to bring a detection model into a native, approachable UI.
+BCare was our team's capstone project at **Bangkit Academy 2023**. I was the **Android developer** in a team of six, working with teammates on the Machine Learning and Cloud side.
 
-## Highlights
+## What I did
 
-- Led Android development and coordinated integration with the ML and Cloud teams.
-- Screening flow that returns a condition result with actionable advice.
-- Article feed to help mothers and families understand baby blues syndrome.
-- Empathy-driven UI design that creates a safe digital space for early screening.
+- Built the Android app and integrated it with the team's ML model and backend.
+- A short screening flow that shows a result with some suggestions.
+- An article section with information about baby blues for mothers and families.

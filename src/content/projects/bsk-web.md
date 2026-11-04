@@ -5,8 +5,8 @@ year: 2026
 order: 3
 featured: true
 kind: web
-summary: A production website for a Padang – Batusangkar travel company, built for speed, clarity, and easy booking.
-outcome: Delivered a production-ready website that became the company's primary digital touchpoint, improving customer trust and accessibility.
+summary: A website for PT Batusangkar Indah Transport, a travel service between Padang and Batusangkar.
+outcome: The site is live at bskindahtransport.my.id, with routes, fleet, FAQ, and a WhatsApp link for booking.
 tags: [HTML5, CSS3, JavaScript, Web Hosting]
 links:
   live: https://bskindahtransport.my.id
@@ -16,10 +16,10 @@ images:
   - ../../assets/projects/bsk-web/2.jpg
 ---
 
-I built and deployed the official website for **PT Batusangkar Indah Transport**, a door-to-door travel service between Padang and Batusangkar.
+I built and deployed the website for **PT Batusangkar Indah Transport**, a door-to-door travel service between Padang and Batusangkar.
 
-## Focus
+## Notes
 
-- **Fast performance**: built with plain HTML, CSS and JavaScript.
-- **Clean interface**: services, routes, fleet, FAQ and booking are easy to scan on desktop and mobile, with a direct WhatsApp contact button.
-- **Reliable hosting**: deployed live at bskindahtransport.my.id, serving booking and company information for customers and partners.
+- Built with plain HTML, CSS and JavaScript to keep it light.
+- Services, routes, fleet, FAQ and booking info laid out for both desktop and mobile, with a WhatsApp button for contact.
+- Deployed and hosted at bskindahtransport.my.id.

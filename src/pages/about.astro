@@ -5,7 +5,7 @@ import { site, about, skills, strengths, experience } from '../data/site';
 <Base title="About" description={`About ${site.name}: background, skills, and experience.`}>
   <section class="wrap page-head">
     <p class="eyebrow">About</p>
-    <h1>Engineer by training,<br /><span class="mark">designer</span> at heart.</h1>
+    <h1>A bit <span class="mark">about me.</span></h1>
   </section>
 
   <section class="wrap intro">
@@ -16,7 +16,7 @@ import { site, about, skills, strengths, experience } from '../data/site';
   </section>
 
   <section class="section wrap" aria-labelledby="journey">
-    <div class="section-head"><h2 id="journey">The <span class="mark">journey.</span></h2></div>
+    <div class="section-head"><h2 id="journey"><span class="mark">Experience.</span></h2></div>
     <ol class="timeline">
       {experience.map((e) => (
         <li class="reveal">
@@ -32,7 +32,7 @@ import { site, about, skills, strengths, experience } from '../data/site';
   </section>
 
   <section class="section wrap" aria-labelledby="toolkit">
-    <div class="section-head"><h2 id="toolkit">The <span class="mark">toolkit.</span></h2></div>
+    <div class="section-head"><h2 id="toolkit">Tools I <span class="mark">use.</span></h2></div>
     <div class="skills">
       {skills.map((s) => (
         <div class="reveal">
@@ -52,7 +52,7 @@ import { site, about, skills, strengths, experience } from '../data/site';
 
 <style>
   .page-head { padding-block: clamp(56px, 10vw, 120px) 32px; }
-  .page-head h1 { font-size: clamp(2.8rem, 8vw, 6rem); margin-top: 16px; }
+  .page-head h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.12; margin-top: 16px; }
   .intro { position: relative; display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px; padding-bottom: 24px; }
   .orb {
     aspect-ratio: 1; border-radius: 50%; align-self: start; position: sticky; top: 120px;

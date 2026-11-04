@@ -8,8 +8,8 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 <Base title="Work" description="Selected projects across Android, web, and UI/UX design.">
   <section class="wrap page-head">
     <p class="eyebrow">Work · {projects.length} projects</p>
-    <h1>Things I've <span class="mark">built</span><br />and designed.</h1>
-    <p class="muted lede">Android apps, production websites, and UI/UX case studies, from thesis research to real clients.</p>
+    <h1>Things I've <span class="mark">worked on.</span></h1>
+    <p class="muted lede">Android apps, websites, and a few UI/UX projects.</p>
   </section>
   <section class="wrap section grid-wrap">
     <div class="grid">
@@ -20,7 +20,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 
 <style>
   .page-head { padding-block: clamp(56px, 10vw, 120px) 0; }
-  .page-head h1 { font-size: clamp(2.8rem, 8vw, 6rem); margin-top: 16px; }
+  .page-head h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); line-height: 1.12; margin-top: 16px; }
   .lede { max-width: 48ch; font-size: 1.1rem; margin-top: 24px; }
   .grid-wrap { padding-top: 56px; }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(48px, 6vw, 80px) clamp(24px, 4vw, 48px); }

@@ -7,7 +7,7 @@ export const site = {
   location: 'Padang, Indonesia',
   tagline: 'I build Android apps and websites, and enjoy working on the design side too.',
   description:
-    'Muhammad Dwiky Alfira — Software Engineering graduate building Android apps, websites, and thoughtful UI/UX. Bangkit Academy distinction graduate & IISMA awardee.',
+    'Muhammad Dwiky Alfira, a software engineering graduate who builds Android apps and websites.',
   email: 'dwikyalfira1@gmail.com',
   status: 'Open to opportunities',
   socials: [
@@ -19,14 +19,14 @@ export const site = {
 
 export const about = {
   intro: [
-    "I'm a Software Engineering graduate from Politeknik Negeri Padang with a passion for creating seamless digital experiences — combining hands-on Android and web development with a user-centric design mindset.",
-    'I graduated with distinction from Bangkit Academy (led by Google, GoTo & Traveloka) and studied abroad at ISEP Porto, Portugal through the IISMA scholarship, where I also helped organise an exhibition introducing Indonesian art and culture to the local community.',
-    'I think critically, adapt quickly to new environments, and enjoy collaborating across diverse teams to ship things people actually use.',
+    "I studied Software Engineering at Politeknik Negeri Padang. Most of what I build is Android apps and websites, and I like spending time on the design side too.",
+    'I joined the mobile development path at Bangkit Academy, and spent a semester at ISEP in Porto, Portugal through the IISMA exchange, where I also helped with a small exhibition on Indonesian art and culture.',
+    "I'm still learning a lot. I enjoy working with people from different backgrounds on things that are useful.",
   ],
   highlights: [
-    { title: 'Core Expertise', text: 'Android (Kotlin), web foundations (HTML, CSS, JavaScript), and UI/UX design in Figma.' },
-    { title: 'Key Distinction', text: 'Bangkit Academy graduate with Distinction (top 10%); IISMA scholar at ISEP Portugal.' },
-    { title: 'Working Style', text: 'Critical thinker, adaptable collaborator, and detail-oriented problem solver.' },
+    { title: 'What I use', text: 'Kotlin and Flutter for Android, HTML, CSS and JavaScript for the web, and Figma for design.' },
+    { title: 'Background', text: 'Software Engineering at Politeknik Negeri Padang, Bangkit Academy 2023, and an IISMA exchange at ISEP, Portugal.' },
+    { title: 'How I work', text: 'I like to understand the problem first, ask questions, and keep an eye on the details.' },
   ],
 };
 
@@ -38,8 +38,7 @@ export const skills = [
 ];
 
 export const strengths = [
-  'Critical Thinking', 'Problem Solving', 'Initiative', 'Adaptability',
-  'Attention to Detail', 'Teamwork', 'Communication', 'Project Management',
+  'Problem Solving', 'Adaptability', 'Attention to Detail', 'Teamwork', 'Communication',
 ];
 
 export const experience = [
@@ -47,18 +46,18 @@ export const experience = [
     period: 'Sep 2024 — Feb 2025',
     title: 'IISMA Exchange Student',
     org: 'Instituto Superior de Engenharia do Porto (ISEP) · Portugal',
-    text: 'Awarded the IISMA scholarship (Kemendikbud). Took engineering coursework to European academic standards, collaborated with international peers, and helped organise an Indonesian art & culture exhibition for the local Portuguese community.',
+    text: 'One semester abroad through the IISMA scholarship. Took engineering courses with international students and helped organise an exhibition on Indonesian art and culture.',
   },
   {
     period: 'Aug 2023 — Jan 2024',
     title: 'Mobile Development Path',
     org: 'Bangkit Academy — Google, GoTo & Traveloka',
-    text: 'Graduated with Distinction (top 10%). Deep dive into Kotlin, Coroutines, Jetpack Compose, Dagger/Hilt, MVVM and Clean Architecture. Led Android development for the BCare capstone.',
+    text: 'Graduated with distinction. Learned Kotlin, Jetpack Compose and app architecture (MVVM, Clean Architecture), and built the Android app for our BCare capstone.',
   },
   {
     period: 'Aug 2021 — Feb 2026',
     title: 'B.A.Sc. Software Engineering',
     org: 'Politeknik Negeri Padang',
-    text: 'Bachelor of Applied Science (S.Tr.Kom.), GPA 3.73 / 4.00 — a foundation in engineering principles and software architecture.',
+    text: 'Bachelor of Applied Science (S.Tr.Kom.), GPA 3.73 / 4.00.',
   },
 ];

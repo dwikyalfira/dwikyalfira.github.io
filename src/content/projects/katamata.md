@@ -5,8 +5,8 @@ year: 2026
 order: 2
 featured: true
 kind: mobile
-summary: A native Android app for early detection of eye cataracts, running a trained CNN model fully on-device.
-outcome: Integrated a trained CNN model with TensorFlow Lite for fast, privacy-preserving on-device inference — enabling real-time cataract screening without constant internet access.
+summary: An Android app for my final thesis that checks eye photos for signs of cataract, using a CNN model that runs on the phone.
+outcome: The trained CNN model runs on-device with TensorFlow Lite, so the check works without an internet connection.
 tags: [Android (Kotlin), CNN, TensorFlow Lite, UI/UX Design]
 links: {}
   # github: https://github.com/<username>/katamata
@@ -18,12 +18,12 @@ images:
   - ../../assets/projects/katamata/3.jpg
 ---
 
-KataMata is my final thesis project: a native Android application focused on **early detection of eye cataracts**.
+KataMata is my final thesis project: an Android app that looks at a photo of an eye and checks it for signs of **cataract**.
 
-The work bridges clinical-grade convolutional neural networks with an accessible, on-device mobile flow, so screenings can happen even in low-connectivity settings.
+The model runs on the phone itself, so it can be used in places with a weak internet connection. It's a research project and not a replacement for a doctor; the app says so clearly.
 
-## What I built
+## What I did
 
-- Integrated a trained **CNN** model directly into a native Kotlin app using **TensorFlow Lite**: inference runs on the phone, with no server round-trip.
-- A guided flow: pick or take a photo, adjust it, run the analysis, and read the result with a confidence score and next-step advice.
-- Educational screens about cataracts and the CNN technology behind the app, plus a clear medical disclaimer.
+- Integrated a trained **CNN** model into a native Kotlin app with **TensorFlow Lite**, so the analysis runs on-device.
+- Built a simple flow: pick or take a photo, adjust it, run the check, and see the result with a confidence score and a short note on what to do next.
+- Added a few screens explaining cataracts and how the model works.
