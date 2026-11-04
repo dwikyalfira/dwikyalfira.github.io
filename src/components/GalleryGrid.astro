@@ -1,5 +1,5 @@
 ---
-import { getPhotos, pexelsSrc, pexelsSrcset, photoInfo } from '../data/gallery';
+import { getPhotos, pexelsSrc, pexelsSrcset, pexelsPage } from '../data/gallery';
 
 interface Props {
   limit?: number;
@@ -9,11 +9,13 @@ const all = await getPhotos();
 const photos = limit ? all.slice(0, limit) : all;
 ---
 <div class="masonry" data-gallery>
-  {photos.map((p, i) => {
-    const info = photoInfo(p.id);
-    return (
-    <figure class="item reveal" data-camera={info?.camera} data-settings={info?.settings} data-date={info?.date}>
-      <button type="button" class="open" data-index={i} aria-label={`Open photo: ${p.title}`}>
+  {photos.map((p, i) => (
+    <figure
+      class="item reveal"
+      data-size={p.pxW && p.pxH ? `${p.pxW} × ${p.pxH}` : undefined}
+      data-page={pexelsPage(p.id)}
+    >
+      <button type="button" class="open" data-index={i} aria-label={`Open photo: ${p.title}`} style={p.avgColor ? `background:${p.avgColor}` : undefined}>
         <img
           src={pexelsSrc(p.id, 700)}
           srcset={pexelsSrcset(p.id)}
@@ -31,8 +33,7 @@ const photos = limit ? all.slice(0, limit) : all;
         {p.place && <span class="eyebrow">{p.place}</span>}
       </figcaption>
     </figure>
-    );
-  })}
+  ))}
 </div>
 
 <dialog class="lightbox" aria-label="Photo viewer">
@@ -40,7 +41,7 @@ const photos = limit ? all.slice(0, limit) : all;
   <div class="lens" aria-hidden="true"></div>
   <div class="cap">
     <p class="cap-title"></p>
-    <p class="exif"></p>
+    <p class="info"><span class="size"></span><a class="src" target="_blank" rel="noopener noreferrer">View on Pexels ↗</a></p>
   </div>
   <p class="hint">Click or tap the photo to magnify</p>
   <button type="button" class="nav prev" aria-label="Previous photo">←</button>
@@ -55,7 +56,8 @@ const photos = limit ? all.slice(0, limit) : all;
     const buttons = [...grid.querySelectorAll<HTMLButtonElement>('.open')];
     const img = dlg.querySelector('img')!;
     const capTitle = dlg.querySelector<HTMLElement>('.cap-title')!;
-    const exif = dlg.querySelector<HTMLElement>('.exif')!;
+    const size = dlg.querySelector<HTMLElement>('.info .size')!;
+    const srcLink = dlg.querySelector<HTMLAnchorElement>('.info .src')!;
     let cur = 0;
     const show = (i: number) => {
       cur = (i + buttons.length) % buttons.length;
@@ -65,8 +67,9 @@ const photos = limit ? all.slice(0, limit) : all;
       const fc = buttons[cur].parentElement?.querySelector('figcaption');
       capTitle.textContent = fc ? [...fc.children].map((c) => c.textContent?.trim()).filter(Boolean).join(' · ') : '';
       const d = buttons[cur].closest<HTMLElement>('figure')?.dataset ?? {};
-      exif.textContent = [d.camera, d.settings, d.date].filter(Boolean).join('  ·  ');
-      exif.hidden = !exif.textContent;
+      size.textContent = d.size ? `${d.size} px` : '';
+      size.hidden = !d.size;
+      srcLink.href = d.page ?? '#';
     };
     // ---- magnifier: click the photo to toggle a lens that follows the pointer ----
     const lens = dlg.querySelector<HTMLElement>('.lens')!;
@@ -149,10 +152,13 @@ const photos = limit ? all.slice(0, limit) : all;
   .cap { max-width: 640px; text-align: center; }
   .cap p { margin: 0; }
   .cap-title { font-size: 0.95rem; opacity: 0.9; }
-  .exif {
-    margin-top: 6px !important; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
-    opacity: 0.6; white-space: pre-wrap;
+  .info {
+    margin-top: 6px !important; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
   }
+  .info .size { opacity: 0.6; }
+  .info .src { color: #fff; opacity: 0.8; text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.35); }
+  .info .src:hover { opacity: 1; }
   .lightbox button {
     position: absolute; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 1.1rem; cursor: pointer;
