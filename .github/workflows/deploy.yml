@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # rebuild every day at 00:00 UTC (07:00 WIB) to pick up new photos in the Pexels collection
+    - cron: '0 0 * * *'
 
 permissions:
   contents: read
@@ -17,6 +20,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+      PEXELS_COLLECTION_ID: ${{ vars.PEXELS_COLLECTION_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: withastro/action@v3

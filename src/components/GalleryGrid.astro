@@ -1,10 +1,11 @@
 ---
-import { photos as all, pexelsSrc, pexelsSrcset } from '../data/gallery';
+import { getPhotos, pexelsSrc, pexelsSrcset } from '../data/gallery';
 
 interface Props {
   limit?: number;
 }
 const { limit } = Astro.props;
+const all = await getPhotos();
 const photos = limit ? all.slice(0, limit) : all;
 ---
 <div class="masonry" data-gallery>

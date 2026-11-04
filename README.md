@@ -22,7 +22,9 @@ npm run build    # hasil build ada di dist/
 
 **Menambah proyek baru:** salin salah satu file `.md` di `src/content/projects/`, ganti isinya, lalu taruh gambarnya di `src/assets/projects/<slug>/`. Isi `links:` dengan `github`, `live`, atau `figma` agar tombolnya muncul.
 
-**Galeri:** foto dimuat langsung dari akun Pexels Anda. Untuk menambah foto, salin ID dari URL foto Pexels (mis. `pexels.com/photo/40748182/` → `40748182`), lalu tambahkan satu baris di `photos` pada `src/data/gallery.ts`.
+**Galeri otomatis (koleksi Pexels):** jika repo punya secret `PEXELS_API_KEY` dan variable `PEXELS_COLLECTION_ID` (Settings → Secrets and variables → Actions), galeri diambil dari koleksi Pexels tersebut saat build. Web juga di-build ulang otomatis setiap hari pukul 07:00 WIB, jadi foto yang baru dimasukkan ke koleksi akan muncul paling lambat sehari kemudian. Untuk langsung memperbarui: tab Actions → Deploy to GitHub Pages → Run workflow. Catatan: GitHub menonaktifkan jadwal otomatis jika repo tidak ada aktivitas selama 60 hari; aktifkan lagi dari tab Actions.
+
+**Galeri manual (cadangan):** foto dimuat langsung dari akun Pexels Anda. Untuk menambah foto, salin ID dari URL foto Pexels (mis. `pexels.com/photo/40748182/` → `40748182`), lalu tambahkan satu baris di `photos` pada `src/data/gallery.ts`.
 
 ## Deploy ke GitHub Pages
 

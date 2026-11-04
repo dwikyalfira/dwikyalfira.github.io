@@ -7,6 +7,43 @@ export const pexelsProfile = 'https://www.pexels.com/@dwiky-alfira-3834505/';
 
 export type Photo = { id: string; w: number; h: number; title: string; place?: string };
 
+/**
+ * Auto mode: if PEXELS_API_KEY and PEXELS_COLLECTION_ID are set at build time
+ * (GitHub Actions secret + variable), the gallery is loaded from that Pexels collection.
+ * Otherwise (or if the request fails) the manual list below is used.
+ */
+let cache: Promise<Photo[]> | undefined;
+export function getPhotos(): Promise<Photo[]> {
+  return (cache ??= loadCollection());
+}
+
+async function loadCollection(): Promise<Photo[]> {
+  const key = import.meta.env.PEXELS_API_KEY ?? process.env.PEXELS_API_KEY;
+  const collection = import.meta.env.PEXELS_COLLECTION_ID ?? process.env.PEXELS_COLLECTION_ID;
+  if (!key || !collection) return photos;
+
+  try {
+    const out: Photo[] = [];
+    let url: string | undefined = `https://api.pexels.com/v1/collections/${collection}?type=photos&per_page=80`;
+    while (url && out.length < 400) {
+      const res = await fetch(url, { headers: { Authorization: key } });
+      if (!res.ok) throw new Error(`Pexels API ${res.status}`);
+      const data: { media: { id: number; width: number; height: number; alt?: string }[]; next_page?: string } =
+        await res.json();
+      for (const m of data.media) {
+        const manual = photos.find((p) => p.id === String(m.id));
+        out.push(manual ?? { id: String(m.id), w: m.width, h: m.height, title: m.alt?.trim() || 'Photograph' });
+      }
+      url = data.next_page;
+    }
+    console.log(`[gallery] Loaded ${out.length} photos from Pexels collection`);
+    return out.length ? out : photos;
+  } catch (err) {
+    console.warn('[gallery] Could not load Pexels collection, using manual list:', err);
+    return photos;
+  }
+}
+
 export const photos: Photo[] = [
   { id: '40748182', w: 3, h: 2, title: 'Sunset over campus' },
   { id: '40748175', w: 3, h: 2, title: 'Contrail over the trees', place: 'Porto, Portugal' },
