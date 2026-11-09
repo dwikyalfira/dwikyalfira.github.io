@@ -1,0 +1,476 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-09T16:39:11+00:00",
+  "title": "Design System: Muhammad Dwiky Alfira",
+  "extensions": {
+    "colorMeta": {
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "tonalRamp": [
+          "oklch(15% 0.056 263)",
+          "oklch(26% 0.119 263)",
+          "oklch(38% 0.169 263)",
+          "oklch(49% 0.169 263)",
+          "oklch(61% 0.169 263)",
+          "oklch(72% 0.155 263)",
+          "oklch(84% 0.091 263)",
+          "oklch(95% 0.028 263)"
+        ],
+        "canonical": "oklch(45.9% 0.169 263)"
+      },
+      "night-blue": {
+        "role": "primary",
+        "displayName": "Night Blue",
+        "tonalRamp": [
+          "oklch(15% 0.043 267)",
+          "oklch(26% 0.093 267)",
+          "oklch(38% 0.132 267)",
+          "oklch(49% 0.132 267)",
+          "oklch(61% 0.132 267)",
+          "oklch(72% 0.121 267)",
+          "oklch(84% 0.071 267)",
+          "oklch(95% 0.022 267)"
+        ],
+        "canonical": "oklch(74.2% 0.132 267)"
+      },
+      "marker-red": {
+        "role": "secondary",
+        "displayName": "Marker Red",
+        "tonalRamp": [
+          "oklch(15% 0.062 28)",
+          "oklch(26% 0.132 28)",
+          "oklch(38% 0.188 28)",
+          "oklch(49% 0.188 28)",
+          "oklch(61% 0.188 28)",
+          "oklch(72% 0.172 28)",
+          "oklch(84% 0.101 28)",
+          "oklch(95% 0.031 28)"
+        ],
+        "canonical": "oklch(55.1% 0.188 28)"
+      },
+      "ring-red": {
+        "role": "secondary",
+        "displayName": "Ring Red",
+        "tonalRamp": [
+          "oklch(15% 0.070 28)",
+          "oklch(26% 0.149 28)",
+          "oklch(38% 0.212 28)",
+          "oklch(49% 0.212 28)",
+          "oklch(61% 0.212 28)",
+          "oklch(72% 0.194 28)",
+          "oklch(84% 0.114 28)",
+          "oklch(95% 0.035 28)"
+        ],
+        "canonical": "oklch(59.1% 0.212 28)"
+      },
+      "night-red": {
+        "role": "secondary",
+        "displayName": "Night Red",
+        "tonalRamp": [
+          "oklch(15% 0.063 27)",
+          "oklch(26% 0.136 27)",
+          "oklch(38% 0.193 27)",
+          "oklch(49% 0.193 27)",
+          "oklch(61% 0.193 27)",
+          "oklch(72% 0.177 27)",
+          "oklch(84% 0.104 27)",
+          "oklch(95% 0.032 27)"
+        ],
+        "canonical": "oklch(61.2% 0.193 27)"
+      },
+      "orb-pink": {
+        "role": "tertiary",
+        "displayName": "Orb Pink",
+        "tonalRamp": [
+          "oklch(15% 0.076 6)",
+          "oklch(26% 0.162 6)",
+          "oklch(38% 0.230 6)",
+          "oklch(49% 0.230 6)",
+          "oklch(61% 0.230 6)",
+          "oklch(72% 0.211 6)",
+          "oklch(84% 0.124 6)",
+          "oklch(95% 0.038 6)"
+        ],
+        "canonical": "oklch(66.9% 0.230 6)"
+      },
+      "orb-blush": {
+        "role": "tertiary",
+        "displayName": "Orb Blush",
+        "tonalRamp": [
+          "oklch(15% 0.024 6)",
+          "oklch(26% 0.051 6)",
+          "oklch(38% 0.072 6)",
+          "oklch(49% 0.072 6)",
+          "oklch(61% 0.072 6)",
+          "oklch(72% 0.066 6)",
+          "oklch(84% 0.039 6)",
+          "oklch(95% 0.012 6)"
+        ],
+        "canonical": "oklch(84.2% 0.072 6)"
+      },
+      "orb-cream": {
+        "role": "tertiary",
+        "displayName": "Orb Cream",
+        "tonalRamp": [
+          "oklch(15% 0.013 101)",
+          "oklch(26% 0.029 101)",
+          "oklch(38% 0.041 101)",
+          "oklch(49% 0.041 101)",
+          "oklch(61% 0.041 101)",
+          "oklch(72% 0.037 101)",
+          "oklch(84% 0.022 101)",
+          "oklch(95% 0.007 101)"
+        ],
+        "canonical": "oklch(94.7% 0.041 101)"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.002 89)",
+          "oklch(26% 0.005 89)",
+          "oklch(38% 0.007 89)",
+          "oklch(49% 0.007 89)",
+          "oklch(61% 0.007 89)",
+          "oklch(72% 0.006 89)",
+          "oklch(84% 0.004 89)",
+          "oklch(95% 0.001 89)"
+        ],
+        "canonical": "oklch(96.7% 0.007 89)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.017 265)",
+          "oklch(26% 0.036 265)",
+          "oklch(38% 0.051 265)",
+          "oklch(49% 0.051 265)",
+          "oklch(61% 0.051 265)",
+          "oklch(72% 0.047 265)",
+          "oklch(84% 0.028 265)",
+          "oklch(95% 0.008 265)"
+        ],
+        "canonical": "oklch(22.3% 0.051 265)"
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "tonalRamp": [
+          "oklch(15% 0.012 267)",
+          "oklch(26% 0.025 267)",
+          "oklch(38% 0.035 267)",
+          "oklch(49% 0.035 267)",
+          "oklch(61% 0.035 267)",
+          "oklch(72% 0.032 267)",
+          "oklch(84% 0.019 267)",
+          "oklch(95% 0.006 267)"
+        ],
+        "canonical": "oklch(50.0% 0.035 267)"
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "oklch(15% 0.017 265)",
+          "oklch(26% 0.036 265)",
+          "oklch(38% 0.051 265)",
+          "oklch(49% 0.051 265)",
+          "oklch(61% 0.051 265)",
+          "oklch(72% 0.047 265)",
+          "oklch(84% 0.028 265)",
+          "oklch(95% 0.008 265)"
+        ]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "tonalRamp": [
+          "oklch(15% 0.011 269)",
+          "oklch(26% 0.023 269)",
+          "oklch(38% 0.032 269)",
+          "oklch(49% 0.032 269)",
+          "oklch(61% 0.032 269)",
+          "oklch(72% 0.030 269)",
+          "oklch(84% 0.017 269)",
+          "oklch(95% 0.005 269)"
+        ],
+        "canonical": "oklch(17.2% 0.032 269)"
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "tonalRamp": [
+          "oklch(15% 0.003 267)",
+          "oklch(26% 0.007 267)",
+          "oklch(38% 0.010 267)",
+          "oklch(49% 0.010 267)",
+          "oklch(61% 0.010 267)",
+          "oklch(72% 0.009 267)",
+          "oklch(84% 0.005 267)",
+          "oklch(95% 0.002 267)"
+        ],
+        "canonical": "oklch(95.5% 0.010 267)"
+      },
+      "night-slate": {
+        "role": "neutral",
+        "displayName": "Night Slate",
+        "tonalRamp": [
+          "oklch(15% 0.011 266)",
+          "oklch(26% 0.024 266)",
+          "oklch(38% 0.034 266)",
+          "oklch(49% 0.034 266)",
+          "oklch(61% 0.034 266)",
+          "oklch(72% 0.031 266)",
+          "oklch(84% 0.018 266)",
+          "oklch(95% 0.006 266)"
+        ],
+        "canonical": "oklch(71.2% 0.034 266)"
+      },
+      "night-hairline": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "tonalRamp": [
+          "oklch(15% 0.003 267)",
+          "oklch(26% 0.007 267)",
+          "oklch(38% 0.010 267)",
+          "oklch(49% 0.010 267)",
+          "oklch(61% 0.010 267)",
+          "oklch(72% 0.009 267)",
+          "oklch(84% 0.005 267)",
+          "oklch(95% 0.002 267)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page and hero headlines."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project names and timeline entries."
+      },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "Single serif lines listing facts."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs and interface text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase tags, metadata, and captions."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-lift",
+        "value": "0 24px 48px -24px rgba(15, 26, 51, 0.45)",
+        "purpose": "Project frame on hover or focus."
+      },
+      {
+        "name": "screenshot",
+        "value": "0 20px 40px -18px rgba(0, 0, 0, 0.55)",
+        "purpose": "Screenshots inside project frames."
+      },
+      {
+        "name": "floating-control",
+        "value": "0 10px 30px -16px rgba(15, 26, 51, 0.45)",
+        "purpose": "Back-to-top button."
+      },
+      {
+        "name": "lens",
+        "value": "0 12px 40px rgba(0, 0, 0, 0.5)",
+        "purpose": "Gallery magnifier."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Press feedback and the lightbox."
+      },
+      {
+        "name": "ease-settle",
+        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "Scroll reveals, hero entrance, and card lift."
+      },
+      {
+        "name": "press",
+        "value": "160ms, scale 0.97 (pills) or 0.95 (round icons)",
+        "purpose": "Pressed state, added to any hover transform."
+      },
+      {
+        "name": "lightbox",
+        "value": "200ms opacity with scale 0.97 to 1",
+        "purpose": "Opening and closing the photo viewer."
+      },
+      {
+        "name": "reveal",
+        "value": "800ms opacity with translateY 18px",
+        "purpose": "Content entering on scroll."
+      },
+      {
+        "name": "orb-breathe",
+        "value": "14s ease-in-out, infinite alternate",
+        "purpose": "Hero orb at rest; paused when off screen."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "collapse",
+        "value": "820px"
+      },
+      {
+        "name": "timeline",
+        "value": "720px"
+      },
+      {
+        "name": "footer-meta",
+        "value": "640px"
+      },
+      {
+        "name": "pill",
+        "value": "520px"
+      },
+      {
+        "name": "logo-name",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "One main action per view.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">See my work <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:.5em;padding:.7em 1.2em;border-radius:999px;border:1px solid var(--line);font-size:.95rem;text-decoration:none;font-family:var(--sans);cursor:pointer;transition:transform .2s,background-color .2s,color .2s,border-color .2s,scale 160ms var(--ease-out);background:var(--ink);color:var(--bg);border-color:var(--ink);}.ds-btn-primary:hover{transform:translateY(-2px);background:var(--blue);border-color:var(--blue);color:#fff;}.ds-btn-primary:active{scale:var(--press);}.ds-btn-primary:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action beside the primary button.",
+      "html": "<a class=\"ds-btn-ghost\" href=\"#\">Get in touch</a>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:.5em;padding:.7em 1.2em;border-radius:999px;border:1px solid var(--line);font-size:.95rem;text-decoration:none;font-family:var(--sans);cursor:pointer;transition:transform .2s,background-color .2s,color .2s,border-color .2s,scale 160ms var(--ease-out);background:transparent;color:var(--ink);}.ds-btn-ghost:hover{transform:translateY(-2px);border-color:var(--ink);}.ds-btn-ghost:active{scale:var(--press);}.ds-btn-ghost:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Static technology tag.",
+      "html": "<span class=\"ds-chip\">Android (Kotlin)</span>",
+      "css": ".ds-chip{font-family:var(--mono);font-size:.72rem;padding:.35em .75em;border:1px solid var(--line);border-radius:999px;color:var(--muted);white-space:nowrap;}"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "custom",
+      "refersTo": "icon-button",
+      "description": "Round control such as the theme toggle.",
+      "html": "<button class=\"ds-icon\" type=\"button\" aria-label=\"Back to top\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 19V5M5.5 11.5 12 5l6.5 6.5\"/></svg></button>",
+      "css": ".ds-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:scale 160ms var(--ease-out),border-color .2s;}.ds-icon:hover{border-color:var(--ink);}.ds-icon:active{scale:var(--press-icon);}.ds-icon:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header links with a red underline on the current page.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Work</a><a href=\"#\">About</a><a href=\"#\">Gallery</a></nav>",
+      "css": ".ds-nav{display:flex;gap:28px;font-family:var(--sans);font-size:.95rem;}.ds-nav a{text-decoration:none;color:var(--muted);position:relative;}.ds-nav a:hover,.ds-nav a[aria-current=page]{color:var(--ink);}.ds-nav a[aria-current=page]::after{content:\"\";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--red);}.ds-nav a:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}"
+    },
+    {
+      "name": "Project Frame",
+      "kind": "card",
+      "refersTo": "project-frame",
+      "description": "Signature blue frame with one orb; only the frame moves on hover.",
+      "html": "<a class=\"ds-frame\" href=\"#\" aria-label=\"Project\"><span class=\"ds-frame-orb\" aria-hidden=\"true\"></span></a>",
+      "css": ".ds-frame{display:block;position:relative;overflow:hidden;width:320px;aspect-ratio:16/11;border-radius:14px;background:#1f4fb4;isolation:isolate;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s ease;}.ds-frame:hover,.ds-frame:focus-visible{transform:translateY(-8px);box-shadow:0 24px 48px -24px rgba(15,26,51,.45);}.ds-frame-orb{position:absolute;width:70%;aspect-ratio:1;right:-22%;bottom:-38%;border-radius:50%;z-index:-1;background:radial-gradient(circle,#ff3d7f 0%,#f5b8c4 26%,#f3efd0 44%,transparent 70%);}"
+    },
+    {
+      "name": "Marker Heading",
+      "kind": "custom",
+      "refersTo": "marker",
+      "description": "Serif heading with one highlighted word.",
+      "html": "<h2 class=\"ds-head\">Selected <span class=\"ds-mark\">work.</span></h2>",
+      "css": ".ds-head{font-family:var(--serif);font-weight:400;font-size:3rem;line-height:1.05;letter-spacing:-.01em;margin:0;color:var(--ink);}.ds-mark{background:var(--red);color:var(--on-red);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone;}"
+    },
+    {
+      "name": "Logo Mark",
+      "kind": "custom",
+      "description": "Letterless rounded square with gradient and red ring.",
+      "html": "<span class=\"ds-logo\" aria-hidden=\"true\"></span>",
+      "css": ".ds-logo{display:block;position:relative;width:34px;height:34px;border-radius:10px;background:radial-gradient(circle at 75% 85%,#ff3d7f,#f3efd0 40%,#1f4fb4 78%);}.ds-logo::before{content:\"\";position:absolute;inset:4px;border-radius:50%;border:2.5px solid #e0302b;box-shadow:0 0 0 .5px rgba(255,255,255,.35);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Warm Signal",
+    "overview": "A plain, quiet surface with one warm source of light on it. Blue is the identity and paper is the room; the pink-to-cream orb is the small sign that a person is behind the page. It comes straight from the owner's portfolio document, where a field of blue holds a single glow in the corner.\n\nThe system is low-key by intent. Large serif headlines do the talking, a single red marker picks out one word, and everything else stays out of the way. Density is low and the pages breathe. Components are soft and tactile: they rest flat, then lift when approached and give slightly when pressed.\n\nMotion is small and has a job. The owner has rejected moving text marquees, 3D tilt on cards, mouse-following effects, and JavaScript cursors that feel heavy, and those rejections are part of the system.",
+    "keyCharacteristics": [
+      "Blue carries the identity; paper and ink carry the reading.",
+      "One red marker per heading, one orb per section.",
+      "Serif display over a humanist sans, with monospace for small labels.",
+      "Flat at rest, tactile on interaction.",
+      "A light film grain over everything, in both themes.",
+      "Light and dark themes share the same structure."
+    ],
+    "rules": [
+      {
+        "name": "The Blue Identity Rule",
+        "body": "When a surface needs to feel like Dwiky's, it turns blue. Red and the orb support blue; they never replace it as the large field.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Marker Rule",
+        "body": "A heading carries at most one red marker, on one word or number. If two things are highlighted, neither is.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Orb Rule",
+        "body": "A section or frame holds at most one orb. It is a light source, not a pattern.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight Comes From Size Rule",
+        "body": "Headlines stay at weight 400. Hierarchy comes from size and the serif, never from bolding.",
+        "section": "typography"
+      },
+      {
+        "name": "The Monospace Is Small Rule",
+        "body": "JetBrains Mono never appears above label size.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Interface surfaces carry no shadow until touched. Screenshots are content, so they are exempt.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Signal Blue for any large identity surface, such as project frames.",
+      "Do limit each heading to one Marker Red word or number.",
+      "Do keep headlines at weight 400 and build hierarchy through size.",
+      "Do keep surfaces flat at rest, and let them lift on hover and give on press.",
+      "Do use 1px Hairline borders for structure instead of filled panels.",
+      "Do keep motion short and functional, and respect reduced-motion preferences.",
+      "Do define colours for both light and dark themes."
+    ],
+    "donts": [
+      "Don't add moving text marquees, 3D tilt on cards, or mouse-following effects.",
+      "Don't add JavaScript-driven custom cursors. The cursor is a lightweight CSS image.",
+      "Don't animate imagery inside a card; only the card itself moves.",
+      "Don't use a portrait of the owner anywhere in the design.",
+      "Don't put letters back in the logo.",
+      "Don't make display headlines louder than the current scale.",
+      "Don't use the orb colours as flat fills or text."
+    ]
+  }
+}

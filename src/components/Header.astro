@@ -46,7 +46,8 @@ const isActive = (href: string) => path.startsWith(u(href));
     background: color-mix(in srgb, var(--bg) 72%, transparent);
   }
   .bar { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
-  .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  /* padding + matching negative margin: a 44px touch target with no visual change */
+  .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; padding: 5px; margin: -5px; }
   .logo:hover { color: var(--ink); }
   .logo-mark {
     display: block; position: relative; flex: none;
@@ -61,15 +62,18 @@ const isActive = (href: string) => path.startsWith(u(href));
   }
   .logo-name { font-family: var(--serif); font-size: 1.25rem; }
   nav { display: flex; align-items: center; gap: clamp(14px, 3vw, 28px); font-size: 0.95rem; }
-  nav a { text-decoration: none; color: var(--muted); position: relative; }
+  nav a { text-decoration: none; color: var(--muted); position: relative; padding: 10px 5px; margin: -10px -5px; }
   nav a:hover, nav a[aria-current='page'] { color: var(--ink); }
   nav a[aria-current='page']::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--red);
+    content: ''; position: absolute; left: 5px; right: 5px; bottom: 6px; height: 2px; background: var(--red);
   }
   .theme {
     display: grid; place-items: center; width: 36px; height: 36px;
     border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
   }
+  .theme { position: relative; transition: scale 160ms var(--ease-out); }
+  .theme::before { content: ''; position: absolute; inset: -5px; border-radius: 50%; } /* 46px touch target around the 36px button */
+  .theme:active { scale: var(--press-icon); }
   .theme:hover { border-color: var(--ink); }
   .moon { display: none; }
   :global(:root[data-theme='dark']) .sun { display: none; }

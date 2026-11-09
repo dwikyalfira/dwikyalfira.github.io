@@ -31,7 +31,7 @@ const photos = await Promise.all(
 // on the gallery page the first row is above the fold: load it right away
 const eager = (i: number) => !limit && i < 3;
 ---
-<div class="masonry" data-gallery>
+<div class:list={['masonry', { preview: !!limit }]} data-gallery>
   {photos.map((p, i) => (
     <figure
       class="item reveal"
@@ -42,7 +42,7 @@ const eager = (i: number) => !limit && i < 3;
         <img
           src={p.src}
           srcset={p.srcset}
-          sizes="(min-width: 1000px) 360px, (min-width: 640px) 46vw, 92vw"
+          sizes={limit ? '(min-width: 1000px) 360px, 46vw' : '(min-width: 1000px) 360px, (min-width: 640px) 46vw, 92vw'}
           width={p.w * 100}
           height={p.h * 100}
           alt={p.title}
@@ -190,16 +190,30 @@ const eager = (i: number) => !limit && i < 3;
   .open :global(img) { width: 100%; transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s; }
   .open:hover :global(img) { transform: scale(1.04); }
   figcaption { display: flex; justify-content: space-between; gap: 12px; padding-top: 8px; font-size: 0.9rem; }
+  /* home page preview on phones: two columns keep the page short before contact */
+  @media (max-width: 640px) {
+    .masonry.preview { columns: 2; column-gap: 12px; }
+    .preview .item { margin-bottom: 14px; }
+    .preview figcaption { flex-direction: column; gap: 2px; }
+  }
 
   .lightbox {
     overscroll-behavior: contain;
     touch-action: none; /* we handle swipes ourselves */
-    max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; padding: 0;
+    /* layout lives here, not on [open]: position and flex must hold while the fade-out plays */
+    position: fixed; inset: 0;
+    max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; margin: 0; padding: 56px 16px 24px;
+    flex-direction: column; align-items: center; justify-content: center; gap: 14px;
     border: 0; background: rgba(6, 10, 22, 0.94); color: #fff;
+    opacity: 0;
+    transition: opacity 200ms var(--ease-out), overlay 200ms allow-discrete, display 200ms allow-discrete;
   }
-  .lightbox[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 56px 16px 24px; }
+  .lightbox[open] { display: flex; opacity: 1; }
+  @starting-style { .lightbox[open] { opacity: 0; } }
   .lightbox::backdrop { background: transparent; }
-  .lightbox img { max-width: min(92vw, 100%); max-height: calc(100vh - 200px); object-fit: contain; border-radius: 6px; cursor: zoom-in; }
+  .lightbox img { max-width: min(92vw, 100%); max-height: calc(100vh - 200px); object-fit: contain; border-radius: 6px; cursor: zoom-in; transform: scale(0.97); transition: transform 200ms var(--ease-out); }
+  .lightbox[open] img { transform: none; }
+  @starting-style { .lightbox[open] img { transform: scale(0.97); } }
   .lightbox.magnifying img { cursor: zoom-out; touch-action: none; }
   .lightbox img.from-right { animation: from-right 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
   .lightbox img.from-left { animation: from-left 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
@@ -239,9 +253,17 @@ const eager = (i: number) => !limit && i < 3;
   .lightbox button {
     position: absolute; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 1.1rem; cursor: pointer;
+    transition: scale 160ms var(--ease-out);
   }
+  .lightbox button:active { scale: var(--press-icon); }
   .lightbox button:hover { background: rgba(255, 255, 255, 0.16); }
   .close { top: 16px; right: 16px; }
   .prev { left: 16px; top: 50%; transform: translateY(-50%); }
   .next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+  /* reduced motion: keep a short fade (it isn't movement), drop the scale */
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox { transition: opacity 150ms ease, overlay 150ms allow-discrete, display 150ms allow-discrete !important; }
+    .lightbox img { transform: none; }
+  }
 </style>

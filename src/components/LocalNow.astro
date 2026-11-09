@@ -43,16 +43,22 @@ const LON = 100.3543;
       const q = `latitude=${lat}&longitude=${lon}&timezone=Asia%2FJakarta`;
       try {
         const w = await (await fetch(`https://api.open-meteo.com/v1/forecast?${q}&current=temperature_2m,weather_code`)).json();
-        $('[data-temp]').textContent = String(Math.round(w.current.temperature_2m));
-        $('[data-wdesc]').textContent = WMO.find(([c]) => c.includes(w.current.weather_code))?.[1] ?? '';
-        $('[data-weather]').hidden = false;
+        const t = w.current?.temperature_2m;
+        if (Number.isFinite(t)) { // a missing value must stay hidden, not read as 0
+          $('[data-temp]').textContent = String(Math.round(t));
+          $('[data-wdesc]').textContent = WMO.find(([c]) => c.includes(w.current.weather_code))?.[1] ?? '';
+          $('[data-weather]').hidden = false;
+        }
       } catch { /* stay hidden */ }
       try {
         const a = await (await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?${q}&current=us_aqi`)).json();
-        const v = Math.round(a.current.us_aqi);
-        $('[data-aqi]').textContent = String(v);
-        $('[data-aqi-dot]').style.background = AQI.find(([max]) => v <= max)![1];
-        $('[data-air]').hidden = false;
+        const raw = a.current?.us_aqi;
+        if (Number.isFinite(raw)) {
+          const v = Math.round(raw);
+          $('[data-aqi]').textContent = String(v);
+          $('[data-aqi-dot]').style.background = AQI.find(([max]) => v <= max)![1];
+          $('[data-air]').hidden = false;
+        }
       } catch { /* stay hidden */ }
     };
     // load once the footer is near, then refresh every 15 minutes
