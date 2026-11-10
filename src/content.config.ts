@@ -14,8 +14,7 @@ const projects = defineCollection({
       summary: z.string(),
       outcome: z.string(),
       tags: z.array(z.string()),
-      kind: z.enum(['mobile', 'web', 'design']),
-      device: z.enum(['phone', 'watch']).default('phone'),
+      kind: z.enum(['mobile', 'wear', 'web', 'design']),
       links: z
         .object({
           live: z.string().url().optional(),

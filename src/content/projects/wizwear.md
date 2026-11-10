@@ -4,8 +4,7 @@ subtitle: WiZ light control for Wear OS
 year: 2026
 order: 7
 featured: false
-kind: mobile
-device: watch
+kind: wear
 role: Android Developer
 summary: A Wear OS app to control Philips WiZ bulbs from your watch over local Wi-Fi, with a tile and a watch-face complication.
 outcome: Open source, built with Kotlin and Wear Material 3. It works without the internet or the WiZ cloud.
