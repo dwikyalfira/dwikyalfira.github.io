@@ -4,7 +4,7 @@ export const site = {
   shortName: 'Dwiky',
   role: 'Software Engineer',
   location: 'Padang, Indonesia',
-  tagline: 'I build Android apps and websites, and enjoy working on the design side too.',
+  tagline: 'I build Android apps, websites, and enjoy working on the design side too.',
   description:
     'Muhammad Dwiky Alfira, a software engineering graduate who builds Android apps and websites.',
   email: 'dwikyalfira1@gmail.com',
