@@ -5,6 +5,7 @@ year: 2026
 order: 6
 featured: false
 kind: mobile
+device: watch
 role: Android Developer
 summary: A Wear OS app that shows the air quality (AQI) around you on a Galaxy Watch, with a world city ranking, a tile and a watch-face complication.
 outcome: Open source, built with Kotlin and Wear Material 3 for Galaxy Watch.

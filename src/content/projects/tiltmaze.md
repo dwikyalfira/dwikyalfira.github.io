@@ -5,6 +5,7 @@ year: 2026
 order: 8
 featured: false
 kind: mobile
+device: watch
 role: Android Developer
 summary: A circular maze game for Wear OS where you tilt your wrist to roll a ball into the centre.
 outcome: Open source, built with Kotlin and Jetpack Compose, with 15 levels and a progress tile.

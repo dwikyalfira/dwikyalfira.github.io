@@ -46,7 +46,7 @@ const links = Object.entries(p.links).filter(([, v]) => v) as [keyof typeof link
 
     <div class="stage">
       <span class="orb" aria-hidden="true"></span>
-      <div class:list={['wrap', 'shots', p.kind]}>
+      <div class:list={['wrap', 'shots', p.kind, { watch: p.device === 'watch' }]}>
         {(p.images.length ? p.images : [p.cover]).map((img, i) => (
           <Image
             src={img}
@@ -97,6 +97,8 @@ const links = Object.entries(p.links).filter(([, v]) => v) as [keyof typeof link
   .shots { display: flex; gap: clamp(12px, 2.5vw, 28px); justify-content: center; align-items: flex-start; flex-wrap: wrap; }
   .shot { border-radius: 14px; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6); }
   .mobile .shot, .design .shot { width: calc((100% - 3 * clamp(12px, 2.5vw, 28px)) / 4); min-width: 140px; }
+  .mobile.watch { align-items: center; }
+  .mobile.watch .shot { width: min(300px, calc(50% - 16px)); min-width: 0; aspect-ratio: 1; border-radius: 50%; object-fit: cover; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6), 0 0 0 6px rgba(255, 255, 255, 0.08); }
   .web { align-items: center; }
   .web .shot:first-child { width: min(100%, 760px); border-radius: 10px; }
   .web .shot:not(:first-child) { width: min(30%, 240px); border-radius: 22px; }
